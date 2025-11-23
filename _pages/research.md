@@ -13,11 +13,11 @@ As an experimental particle physicist, I do my research to understand the world 
 
 ## Completed Searches / Physics Projects at ATLAS
 
-### 1. **Anomaly Detection using Unsupervised ML**
+### 1. **Search for New Physics using Event-based Anomaly Detection**
 - **Paper**: [PhysRevLett.132.081801](https://arxiv.org/abs/2307.01612)  
 We searched for new physics in the form of anomalous events using a novel anomaly detection technique based on unsupervised machine learning. This was the **first event-based anomaly detection** search of ATLAS/CERN, and showed significant improvement in sensitivity across 9 different BSM channels.
 
-### 2. **Di-Higgs Boson Search with ML**
+### 2. **Enhancing Di-Higgs Boson search sensitivities with ML**
 - **Paper**: [arXiv:2504.12418](https://arxiv.org/abs/2504.12418)  
 Developed machine learning techniques to enhance sensitivity for di-Higgs boson searches, using both anomaly detection and supervised classifiers in multiple final states.
 
