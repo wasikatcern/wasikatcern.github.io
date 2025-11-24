@@ -38,7 +38,8 @@ author_profile: true
   *University of Wisconsin-Madison, April 15, 2025*  
   [Link](https://www.physics.wisc.edu/2025/04/15/uw-madison-scientists-part-of-team-awarded-breakthrough-prize-in-physics)
 
-- 📰 **[News in Bangla language in Kolkata, India] "আন্তর্জাতিক ‘ব্রেকথ্রু প্রাইজ’ প্রাপকদের তালিকায় বিজ্ঞানী ড. ওয়াসিকুল ইসলাম**
+- 📰 **[News in Bangla language in India] "আন্তর্জাতিক ‘ব্রেকথ্রু প্রাইজ’ প্রাপকদের তালিকায় বিজ্ঞানী ড.ওয়াসিকুল ইসলাম**
+  *Puber Kalom (Daily Newspaper, Kolkata, India), May 6, 2025*  
    [Link](https://epaper.puberkalom.com/?url=clip&clip=7471)
 
 - 📰 **"Wasikul Islam wins 2024 WISL award for communicating science"**  
