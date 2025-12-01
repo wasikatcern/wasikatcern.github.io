@@ -16,19 +16,23 @@ Below are selected research papers and ATLAS Notes where I made significant cont
 
 ### A Few Selected Research Papers
 
+- Wasikul Islam, *Searches for Dijet Resonances with the ATLAS Detector*, 2025 ([ATL-PHYS-PROC-2025-120](https://cds.cern.ch/record/2949781)).
+- W. Islam, S.V. Chekanov, N. Luongo- *New Physics Searches at the LHC through Event-based Anomaly
+Detection and Development of ADFilter Web-tool*, 2025 ([arXiv:2511.21869](https://arxiv.org/abs/2511.21869)).
 - S.V. Chekanov, W. Islam, N. Luongo — *Enhancing Sensitivity for Di-Higgs Boson Searches Using Anomaly Detection and Supervised Machine Learning Techniques*, 2025 ([arXiv:2504.12418](https://arxiv.org/abs/2504.12418))
 - Wasikul Islam — *WIPUNet: A Physics-inspired Network with Weighted Inductive Biases for Image Denoising*, 2025 ([arXiv:2509.05662](https://arxiv.org/abs/2509.05662))
 - CEPC Study Group — *CEPC Technical Design Report — Reference Detector*, 2025 ([arXiv:2510.05260](https://arxiv.org/abs/2510.05260))
 - Wasikul Islam — *Searches for new physics with leptons using the ATLAS detector*, 2024, PoS(PIC2024)011
-- ATLAS Collaboration — *Search for new phenomena in two-body invariant mass distributions using unsupervised machine learning...*, 2024 ([PhysRevLett.132.081801](https://arxiv.org/abs/2307.01612))
+- ATLAS Collaboration — *Search for new phenomena in two-body invariant mass distributions using unsupervised machine learning...*, 2024 ([PhysRevLett.132.081801](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.132.081801))
 - S. Chekanov, W. Islam, R. Zhang, N. Luongo — *ADFilter: A Web Tool for New Physics Searches with Autoencoder-Based Anomaly Detection*, 2024 ([arXiv:2409.03065](https://arxiv.org/abs/2409.03065))
 - ATLAS Collaboration — *Search for vector-boson resonances decaying into a top quark and a bottom quark...*, 2023 ([arXiv:2308.08521](https://arxiv.org/abs/2308.08521))
 - ATLAS Collaboration — *Search for new phenomena in multi-body invariant masses...*, 2022 ([JHEP07(2023)202](https://arxiv.org/abs/2211.08945))
 - Tulika Bose et al. — *Snowmass Topical Report on Physics Beyond the Standard Model*, 2022 ([arXiv:2209.13128](https://arxiv.org/abs/2209.13128))
 - W. Islam — *Increasing Multilingualism in ATLAS’ Science Communication*, ICHEP2022 Proceedings
+- S.V. Chekanov, S. Darmora, W. Islam, C.E.M. Wagner, J. Zhang - *Model-independent searches for new physics in multi-body invariant masses*, 2021 ([Universe 2021, 7(9), 333](https://www.mdpi.com/2218-1997/7/9/333/htm))
+- ATLAS Collaboration - *Search for dijet resonances in events with an isolated charged lepton using $\sqrt{s}=13$ TeV proton-proton collision data collected by the ATLAS detector*, 2020 ([JHEP 06 (2020) 151](https://link.springer.com/article/10.1007/JHEP06(2020)151))
 - **[In Review]** W. Islam, A. Schwartzman — *Primary Vertex Selection at the HL-LHC* (ATL-COM-PHYS-2025-890)
-- **[In Review]** W. Islam — *Searches for Dijet Resonances with the ATLAS Detector* (ATL-COM-2025-892)
-
+  
 ---
 
 ### Books & Others
