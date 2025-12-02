@@ -22,7 +22,7 @@ Detection and Development of ADFilter Web-tool*, 2025 ([arXiv:2511.21869](https:
 - S.V. Chekanov, W. Islam, N. Luongo — *Enhancing Sensitivity for Di-Higgs Boson Searches Using Anomaly Detection and Supervised Machine Learning Techniques*, 2025 ([arXiv:2504.12418](https://arxiv.org/abs/2504.12418))
 - Wasikul Islam — *WIPUNet: A Physics-inspired Network with Weighted Inductive Biases for Image Denoising*, 2025 ([arXiv:2509.05662](https://arxiv.org/abs/2509.05662))
 - CEPC Study Group — *CEPC Technical Design Report — Reference Detector*, 2025 ([arXiv:2510.05260](https://arxiv.org/abs/2510.05260))
-- Wasikul Islam — *Searches for new physics with leptons using the ATLAS detector*, 2024, PoS(PIC2024)011
+- Wasikul Islam — *Searches for new physics with leptons using the ATLAS detector*, 2024, ([PoS(PIC2024)011](https://cds.cern.ch/record/2920480))
 - ATLAS Collaboration — *Search for new phenomena in two-body invariant mass distributions using unsupervised machine learning...*, 2024 ([PhysRevLett.132.081801](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.132.081801))
 - S. Chekanov, W. Islam, R. Zhang, N. Luongo — *ADFilter: A Web Tool for New Physics Searches with Autoencoder-Based Anomaly Detection*, 2024 ([arXiv:2409.03065](https://arxiv.org/abs/2409.03065))
 - ATLAS Collaboration — *Search for vector-boson resonances decaying into a top quark and a bottom quark...*, 2023 ([arXiv:2308.08521](https://arxiv.org/abs/2308.08521))
