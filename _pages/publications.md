@@ -16,6 +16,7 @@ Below are selected research papers and ATLAS Notes where I made significant cont
 
 ### A Few Selected Research Papers
 
+- Wasikul Islam, S.V. Chekanov - *Compact Representation of Particle-Collision Events for Physics-Informed Machine Learning*, 2026 ([arXiv:2602.17563](https://arxiv.org/abs/2602.17563)).
 - Wasikul Islam, *Searches for Dijet Resonances with the ATLAS Detector*, 2025 ([ATL-PHYS-PROC-2025-120](https://cds.cern.ch/record/2949781)).
 - W. Islam, S.V. Chekanov, N. Luongo- *New Physics Searches at the LHC through Event-based Anomaly
 Detection and Development of ADFilter Web-tool*, 2025 ([arXiv:2511.21869](https://arxiv.org/abs/2511.21869)).
