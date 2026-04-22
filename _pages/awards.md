@@ -50,16 +50,16 @@ author_profile: true
   *University of Wisconsin-Madison, March 21, 2024*  
   [Link](https://www.physics.wisc.edu/2024/03/21/wasikul-islam-wins-2024-wisl-award-for-communicating-science)
 
-- 🧠 **"AI Breakthrough in Detecting New Particles at the Large Hadron Collider"**  
+- 📰 **"AI Breakthrough in Detecting New Particles at the Large Hadron Collider"**  
   *SciTechDaily, July 4, 2024*  
   [Link](https://scitechdaily.com/ai-breakthrough-in-detecting-new-particles-at-the-large-hadron-collider)
 
-- 🧠 **"Machine learning could help reveal undiscovered particles within data from the LHC"**  
+- 📰 **"Machine learning could help reveal undiscovered particles within data from the LHC"**  
   *Phys.org, April 2024*  
   [Link](https://phys.org/news/2024-04-machine-reveal-undiscovered-particles-large.html)  
   *(Also featured on Newswise.com)*
 
-- 🌐 **"ATLAS searches for new phenomena using unsupervised machine learning for anomaly detection"**  
+- 📰 **"ATLAS searches for new phenomena using unsupervised machine learning for anomaly detection"**  
   *ATLAS CERN Physics Briefing, August 24, 2023*  
   [Link](https://atlas.cern/Updates/Briefing/Anomaly-Detection)
 
