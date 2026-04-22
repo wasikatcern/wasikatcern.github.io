@@ -34,6 +34,10 @@ author_profile: true
 
 ## Selected News Articles and Features
 
+- 📰 **"Machine Learning Gains from Data Compression Technique"**  
+  *Quantumzeitgeist.com, February 25, 2026*  
+  [Link](https://quantumzeitgeist.com/machine-learning-gains-data-compression-technique)
+  
 - 📰 **"UW–Madison scientists part of team awarded Breakthrough Prize in Physics"**  
   *University of Wisconsin-Madison, April 15, 2025*  
   [Link](https://www.physics.wisc.edu/2025/04/15/uw-madison-scientists-part-of-team-awarded-breakthrough-prize-in-physics)
