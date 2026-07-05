@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Earthquake Aftershock Forecast Dashboard</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root {
+  --bg: #eef1f4; --surface: #ffffff; --surface-2: #e4e8ed;
+  --text: #1a1e26; --text-muted: #5b6472; --border: #d7dce2;
+  --accent: #2f8f86; --accent-weak: rgba(47,143,134,0.10);
+  --danger: #c8434c; --danger-weak: rgba(200,67,76,0.10);
+  --warn: #a8730f; --warn-weak: rgba(168,115,15,0.12);
+  --good: #2f8f53; --good-weak: rgba(47,143,83,0.10);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #12151a; --surface: #181c24; --surface-2: #20252f;
+    --text: #e8eaed; --text-muted: #8b93a3; --border: #2a2f3a;
+    --accent: #5fb8b0; --accent-weak: rgba(95,184,176,0.14);
+    --danger: #e5646b; --danger-weak: rgba(229,100,107,0.14);
+    --warn: #e0a640; --warn-weak: rgba(224,166,64,0.14);
+    --good: #5fbf77; --good-weak: rgba(95,191,119,0.14);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12151a; --surface: #181c24; --surface-2: #20252f;
+  --text: #e8eaed; --text-muted: #8b93a3; --border: #2a2f3a;
+  --accent: #5fb8b0; --accent-weak: rgba(95,184,176,0.14);
+  --danger: #e5646b; --danger-weak: rgba(229,100,107,0.14);
+  --warn: #e0a640; --warn-weak: rgba(224,166,64,0.14);
+  --good: #5fbf77; --good-weak: rgba(95,191,119,0.14);
+}
+:root[data-theme="light"] {
+  --bg: #eef1f4; --surface: #ffffff; --surface-2: #e4e8ed;
+  --text: #1a1e26; --text-muted: #5b6472; --border: #d7dce2;
+  --accent: #2f8f86; --accent-weak: rgba(47,143,134,0.10);
+  --danger: #c8434c; --danger-weak: rgba(200,67,76,0.10);
+  --warn: #a8730f; --warn-weak: rgba(168,115,15,0.12);
+  --good: #2f8f53; --good-weak: rgba(47,143,83,0.10);
+}
+
+* { box-sizing: border-box; }
+body {
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+  background: var(--bg); color: var(--text); margin: 0; padding: 32px 28px 40px;
+}
+h1 {
+  font-size: 22px; font-weight: 700; letter-spacing: -0.01em;
+  margin: 0 0 4px; text-wrap: balance;
+}
+.subtitle { color: var(--text-muted); font-size: 13px; margin-bottom: 20px; }
+
+.summary-row { display: flex; gap: 10px; margin-bottom: 22px; flex-wrap: wrap; }
+.chip {
+  display: flex; align-items: baseline; gap: 6px; padding: 7px 14px;
+  border-radius: 7px; border: 1px solid var(--border); background: var(--surface);
+  font-size: 12.5px; color: var(--text-muted);
+}
+.chip b { font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 15px; font-variant-numeric: tabular-nums; }
+.chip.chip-ELEVATED b { color: var(--danger); }
+.chip.chip-WATCH b { color: var(--warn); }
+.chip.chip-LOW b { color: var(--good); }
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 13px; min-width: 1020px; }
+th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+th {
+  color: var(--text-muted); font-weight: 600; text-transform: uppercase;
+  font-size: 10.5px; letter-spacing: 0.06em; background: var(--surface-2);
+}
+tbody tr { border-left: 3px solid transparent; }
+tbody tr.sev-ELEVATED { border-left-color: var(--danger); }
+tbody tr.sev-WATCH { border-left-color: var(--warn); }
+tbody tr.sev-LOW { border-left-color: var(--good); }
+tbody tr:hover { background: var(--accent-weak); }
+
+.zone-name { font-weight: 600; }
+.mainshock { color: var(--text-muted); font-size: 12px; }
+.prob {
+  font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  font-variant-numeric: tabular-nums; font-size: 13px;
+}
+.prob.final { font-weight: 700; font-size: 14px; }
+
+.pill {
+  display: inline-block; padding: 2px 9px; border-radius: 100px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.02em;
+}
+.pill-ELEVATED { color: var(--danger); background: var(--danger-weak); }
+.pill-WATCH { color: var(--warn); background: var(--warn-weak); }
+.pill-LOW { color: var(--good); background: var(--good-weak); }
+
+.toggle { color: var(--accent); cursor: pointer; font-size: 12px; user-select: none; }
+.toggle:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.detail-panel {
+  display: none; background: var(--surface-2); padding: 10px 12px; margin-top: 6px;
+  border-radius: 6px; font-size: 12px; color: var(--text-muted); line-height: 1.6;
+}
+.detail-panel.open { display: block; }
+.reason { display: block; padding: 1px 0; }
+.reason b { color: var(--text); }
+
+footer { margin-top: 24px; color: var(--text-muted); font-size: 11.5px; line-height: 1.6; max-width: 68ch; }
+
+.map-section { margin-bottom: 24px; }
+.map-wrap {
+  position: relative; border: 1px solid var(--border); border-radius: 8px;
+  overflow: hidden; background: var(--surface);
+}
+#map { height: 460px; width: 100%; min-width: 320px; background: var(--surface-2); }
+.map-note {
+  display: none; position: absolute; top: 10px; left: 10px; z-index: 1000;
+  background: var(--danger-weak); color: var(--danger); border: 1px solid var(--danger);
+  padding: 6px 10px; border-radius: 6px; font-size: 12px; max-width: 320px;
+}
+.map-note.show { display: block; }
+.legend {
+  position: absolute; bottom: 10px; right: 10px; z-index: 1000;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 7px;
+  padding: 8px 10px; font-size: 11.5px; color: var(--text); line-height: 1.7;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
+.legend-title { font-weight: 700; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 3px; }
+.legend-row { display: flex; align-items: center; gap: 6px; }
+.legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; color: #fff; }
+.legend-swatch { width: 16px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+.eq-divicon {
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 700; font-family: sans-serif; border: 1.5px solid rgba(0,0,0,0.35);
+}
+.leaflet-popup-content { font-size: 12.5px; line-height: 1.5; }
+.leaflet-popup-content b { display: block; margin-bottom: 2px; }
+
+.status-banner {
+  display: flex; align-items: center; gap: 10px; padding: 9px 14px; margin-bottom: 16px;
+  border-radius: 8px; font-size: 12.5px; border: 1px solid var(--border); background: var(--surface);
+}
+.status-banner .dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.status-banner.ok .dot { background: var(--good); }
+.status-banner.stale .dot { background: var(--warn); }
+.status-banner.none .dot { background: var(--text-muted); }
+.status-banner .label { color: var(--text-muted); }
+.status-banner .value { font-weight: 600; }
+
+.recent-runs {
+  margin-bottom: 22px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface);
+  overflow: hidden;
+}
+.recent-runs summary {
+  cursor: pointer; padding: 9px 14px; font-size: 12.5px; font-weight: 600; color: var(--text-muted);
+  list-style: none; user-select: none;
+}
+.recent-runs summary::-webkit-details-marker { display: none; }
+.recent-runs summary::before { content: "\25B8  "; }
+.recent-runs[open] summary::before { content: "\25BE  "; }
+.run-row {
+  display: grid; grid-template-columns: 150px 70px 60px 1fr; gap: 10px;
+  padding: 6px 14px; font-size: 11.5px; border-top: 1px solid var(--border); align-items: center;
+}
+.run-row .run-status { font-weight: 700; }
+.run-row.run-SUCCESS .run-status { color: var(--good); }
+.run-row.run-FAILED .run-status { color: var(--danger); }
+.run-row.run-UNKNOWN .run-status { color: var(--text-muted); }
+.run-row .run-zones { color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.run-empty { padding: 10px 14px; font-size: 12px; color: var(--text-muted); }
+</style>
+<script>
+function tgl(id) {
+  var el = document.getElementById(id);
+  el.classList.toggle('open');
+}
+</script>
+</head><body>
+<h1>Earthquake Aftershock Forecast Dashboard</h1>
+<div class="subtitle">Generated 2026-07-05T23:33:03.003430+00:00 &middot; signal-aggregation demo, not an official hazard forecast</div>
+<div class="status-banner ok"><span class="dot"></span><span class="label">Last updated:</span> <span class="value">2026-07-05 23:33:02 UTC (0.0h ago)</span></div>
+<details class="recent-runs"><summary>Recent runs (4)</summary><div class="run-row run-SUCCESS"><span>2026-07-05 23:33:02 UTC</span><span class="run-status">SUCCESS</span><span>60s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-07-05 17:48:27 UTC</span><span class="run-status">SUCCESS</span><span>60s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-07-04 22:07:02 UTC</span><span class="run-status">SUCCESS</span><span>62s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-07-04 21:38:40 UTC</span><span class="run-status">SUCCESS</span><span>61s</span><span class="run-zones">6/6</span></div></details>
+<div class="summary-row"><div class="chip chip-ELEVATED"><b>0</b> elevated</div><div class="chip chip-WATCH"><b>2</b> watch</div><div class="chip chip-LOW"><b>4</b> low</div></div>
+
+<div class="map-section">
+  <div class="map-wrap">
+    <div id="map"></div>
+    <div id="map-live-note" class="map-note"></div>
+    <div class="legend">
+      <div class="legend-title">Legend</div>
+      <div class="legend-row"><span class="legend-dot" style="background:#c8434c">E</span> Tracked mainshock &mdash; elevated (size &prop; magnitude)</div><div class="legend-row"><span class="legend-dot" style="background:#a8730f">W</span> Tracked mainshock &mdash; watch (size &prop; magnitude)</div><div class="legend-row"><span class="legend-dot" style="background:#2f8f53">L</span> Tracked mainshock &mdash; low (size &prop; magnitude)</div>
+      <div class="legend-row"><span class="legend-dot" style="background:#8fa8c9;border:1px solid #5b7ba8;color:#5b7ba8;">&nbsp;</span> All M&ge;2.5 events, last 24h (USGS live feed) &mdash; informational only</div>
+      <div class="legend-row"><span class="legend-swatch" style="border:2px dashed var(--text-muted); background:transparent;"></span> Tracked fault zone boundary (click for forecast)</div>
+    </div>
+  </div>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function () {
+  var ZONES = [{"id": "california_san_andreas", "name": "California / San Andreas system", "bounds": [[32.0, -124.0], [40.0, -114.0]], "label": "LOW", "probability": 0.0518, "plain_omori_prob": null}, {"id": "cascadia", "name": "Cascadia subduction zone", "bounds": [[40.0, -125.0], [49.0, -121.0]], "label": "LOW", "probability": 0.0101, "plain_omori_prob": null}, {"id": "oklahoma_induced", "name": "Oklahoma induced seismicity zone", "bounds": [[33.5, -103.0], [37.0, -94.5]], "label": "LOW", "probability": 0.0101, "plain_omori_prob": null}, {"id": "alaska_aleutian", "name": "Alaska-Aleutian subduction zone", "bounds": [[51.0, -170.0], [62.0, -130.0]], "label": "WATCH", "probability": 0.4496, "plain_omori_prob": null}, {"id": "new_madrid", "name": "New Madrid seismic zone", "bounds": [[35.0, -91.0], [38.0, -88.0]], "label": "LOW", "probability": 0.0101, "plain_omori_prob": null}, {"id": "japan_trench", "name": "Japan trench subduction zone", "bounds": [[30.0, 129.0], [46.0, 146.0]], "label": "WATCH", "probability": 0.8106, "plain_omori_prob": null}];
+  var MAINSHOCKS = [{"zone_id": "alaska_aleutian", "zone_name": "Alaska-Aleutian subduction zone", "label": "WATCH", "lat": 60.237, "lon": -145.91, "mag": 5.3, "place": "35 km SSW of Cordova, Alaska", "time": "2026-06-29T03:32:39.606000+00:00", "depth_km": 13.3}, {"zone_id": "california_san_andreas", "zone_name": "California / San Andreas system", "label": "LOW", "lat": 39.3623333333333, "lon": -123.228833333333, "mag": 5.59, "place": "11 km N of Redwood Valley, CA", "time": "2026-06-24T15:10:40.760000+00:00", "depth_km": 8.85}, {"zone_id": "japan_trench", "zone_name": "Japan trench subduction zone", "label": "WATCH", "lat": 40.2515, "lon": 142.1614, "mag": 6.9, "place": "33 km ENE of Noda, Japan", "time": "2026-06-24T22:30:12.989000+00:00", "depth_km": 34}];
+  var LABEL_COLORS = {"ELEVATED": "#c8434c", "WATCH": "#a8730f", "LOW": "#2f8f53"};
+  var LABEL_CODES = {"ELEVATED": "E", "WATCH": "W", "LOW": "L"};
+  var LIVE_FEED_URL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
+
+  var map = L.map('map', { worldCopyJump: true }).setView([20, 0], 2);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 12,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  var allBounds = [];
+
+  // 1. Fault zone boundaries (static layer, drawn once from services/fault_zones.py).
+  ZONES.forEach(function (z) {
+    var bounds = z.bounds;
+    allBounds.push(bounds[0], bounds[1]);
+    var color = LABEL_COLORS[z.label] || '#888';
+    var rect = L.rectangle(bounds, {
+      color: color, weight: 2, fillColor: color, fillOpacity: 0.08, dashArray: '5,4'
+    }).addTo(map);
+    var omoriLine = (z.plain_omori_prob === null)
+      ? 'Plain-Omori baseline: pending (Phase B)'
+      : ('Plain-Omori baseline: ' + (z.plain_omori_prob * 100).toFixed(1) + '%');
+    rect.bindPopup(
+      '<b>' + z.name + '</b>' +
+      'Forecast label: <b style="color:' + color + '">' + z.label + '</b><br>' +
+      'Combined probability: ' + (z.probability * 100).toFixed(1) + '%<br>' +
+      omoriLine
+    );
+    rect.bindTooltip(z.name, { sticky: true });
+  });
+
+  // 2. Recent tracked-zone mainshocks (dynamic layer, actual USGS lat/lon, not zone centroid).
+  MAINSHOCKS.forEach(function (m) {
+    var color = LABEL_COLORS[m.label] || '#888';
+    var code = LABEL_CODES[m.label] || '?';
+    var radius = Math.max(16, Math.min(40, 10 + (m.mag - 4) * 8));
+    var icon = L.divIcon({
+      className: 'eq-divicon',
+      html: '<div class="eq-divicon" style="width:' + radius + 'px;height:' + radius + 'px;background:' + color + ';font-size:' + Math.max(10, radius * 0.32) + 'px;">' + code + '</div>',
+      iconSize: [radius, radius],
+      iconAnchor: [radius / 2, radius / 2]
+    });
+    var marker = L.marker([m.lat, m.lon], { icon: icon, zIndexOffset: 500 }).addTo(map);
+    allBounds.push([m.lat, m.lon]);
+    marker.bindPopup(
+      '<b>M' + m.mag.toFixed(1) + ' &mdash; ' + m.place + '</b>' +
+      'Zone: ' + m.zone_name + ' (' + m.label + ')<br>' +
+      'Time: ' + m.time + '<br>' +
+      'Depth: ' + m.depth_km.toFixed(1) + ' km'
+    );
+  });
+
+  if (allBounds.length) {
+    map.fitBounds(allBounds, { padding: [20, 20], maxZoom: 4 });
+  }
+
+  // 3. Live "last 24h" global feed overlay -- informational only, not a prediction.
+  //    Wrapped in try/catch (via fetch().catch) so a USGS outage never blocks the
+  //    rest of the dashboard from rendering.
+  fetch(LIVE_FEED_URL)
+    .then(function (resp) {
+      if (!resp.ok) { throw new Error('HTTP ' + resp.status); }
+      return resp.json();
+    })
+    .then(function (geojson) {
+      (geojson.features || []).forEach(function (f) {
+        var coords = f.geometry && f.geometry.coordinates;
+        if (!coords) { return; }
+        var lon = coords[0], lat = coords[1], depth = coords[2];
+        var mag = (f.properties && f.properties.mag) || 0;
+        var place = (f.properties && f.properties.place) || 'Unknown location';
+        var time = f.properties && f.properties.time
+          ? new Date(f.properties.time).toISOString()
+          : 'unknown time';
+        var r = Math.max(2, Math.min(9, 2 + mag));
+        L.circleMarker([lat, lon], {
+          radius: r, color: '#5b7ba8', weight: 1, fillColor: '#8fa8c9',
+          fillOpacity: 0.45, opacity: 0.5
+        }).bindPopup(
+          '<b>M' + mag.toFixed(1) + ' &mdash; ' + place + '</b>' +
+          'Time: ' + time + '<br>Depth: ' + (depth != null ? depth.toFixed(1) : '?') + ' km<br>' +
+          '<i>USGS live feed (last 24h, all M&ge;2.5) &mdash; informational only</i>'
+        ).addTo(map);
+      });
+    })
+    .catch(function (err) {
+      var note = document.getElementById('map-live-note');
+      if (note) {
+        note.textContent = 'Live 24h USGS feed unavailable right now (' + err.message + '). Zone boundaries and tracked mainshocks above are unaffected.';
+        note.classList.add('show');
+      }
+    });
+})();
+</script>
+<div class="table-wrap">
+<table>
+<thead><tr>
+  <th>Fault zone</th><th>Recent mainshock</th><th>Plain-Omori baseline</th><th>ML-1 only</th>
+  <th>Agent debate only (isolated)</th><th>Agent + ML-1 blend</th>
+  <th>Combined (final)</th><th>Label</th><th>Actual outcome</th><th></th>
+</tr></thead>
+<tbody>
+<tr class="sev-WATCH">
+  <td class="zone-name">Japan trench subduction zone</td>
+  <td class="mainshock">M6.9 33 km ENE of Noda, Japan</td>
+  <td class="prob">86.6%</td>
+  <td class="prob">73.2%</td>
+  <td class="prob">86.7%</td>
+  <td class="prob">82.0%</td>
+  <td class="prob final">81.1%</td>
+  <td><span class="pill pill-WATCH">WATCH</span></td>
+  <td class="mainshock">&mdash; pending</td>
+  <td>
+    <span class="toggle" onclick="tgl('d0')" tabindex="0" role="button">&#9662; details</span>
+    <div id="d0" class="detail-panel">
+      <b>Context modifier reasons:</b><br><span class='reason'>&bull; Observed Omori p=0.61 decaying slower than expected confirms elevated call -> mult +19%</span><span class='reason'>&bull; Observed 7d rate (9.0) well below Omori expectation (30.0) -> mult -20%</span>
+      <br><b>Top contributing events:</b><br><span class='reason'>M7.6 2025 Aomori Prefecture, Japan Earthquake (2025-12-08)</span><span class='reason'>M7.4 102 km ENE of Miyako, Japan (2026-04-20)</span><span class='reason'>M7.1 2024 Hyuganada Sea, Japan Earthquake (2024-08-08)</span><span class='reason'>M6.9 33 km ENE of Noda, Japan (2026-06-24)</span><span class='reason'>M6.8 15 km SE of Miyazaki, Japan (2025-01-13)</span>
+    </div>
+  </td>
+</tr>
+<tr class="sev-WATCH">
+  <td class="zone-name">Alaska-Aleutian subduction zone</td>
+  <td class="mainshock">M5.3 35 km SSW of Cordova, Alaska</td>
+  <td class="prob">41.8%</td>
+  <td class="prob">20.4%</td>
+  <td class="prob">43.4%</td>
+  <td class="prob">34.9%</td>
+  <td class="prob final">45.0%</td>
+  <td><span class="pill pill-WATCH">WATCH</span></td>
+  <td class="mainshock">&mdash; pending</td>
+  <td>
+    <span class="toggle" onclick="tgl('d1')" tabindex="0" role="button">&#9662; details</span>
+    <div id="d1" class="detail-panel">
+      <b>Context modifier reasons:</b><br><span class='reason'>&bull; Observed Omori p=0.61 decaying slower than expected confirms elevated call -> mult +19%</span><span class='reason'>&bull; Observed 7d rate (10.0) exceeds Omori expectation (1.5) -> mult +10%</span>
+      <br><b>Top contributing events:</b><br><span class='reason'>M7.3 2025 Sand Point, Alaska Earthquake (2025-07-16)</span><span class='reason'>M7.0 2025 Hubbard Glacier Earthquake (2025-12-06)</span><span class='reason'>M6.5 271 km WNW of Port McNeill, Canada (2024-09-15)</span><span class='reason'>M6.2 91 km SSE of Sand Point, Alaska (2025-07-20)</span><span class='reason'>M6.0 12 km WNW of Susitna, Alaska (2025-11-27)</span>
+    </div>
+  </td>
+</tr>
+<tr class="sev-LOW">
+  <td class="zone-name">California / San Andreas system</td>
+  <td class="mainshock">M5.6 11 km N of Redwood Valley, CA</td>
+  <td class="prob">8.2%</td>
+  <td class="prob">1.5%</td>
+  <td class="prob">7.5%</td>
+  <td class="prob">5.2%</td>
+  <td class="prob final">5.2%</td>
+  <td><span class="pill pill-LOW">LOW</span></td>
+  <td class="mainshock">&mdash; pending</td>
+  <td>
+    <span class="toggle" onclick="tgl('d2')" tabindex="0" role="button">&#9662; details</span>
+    <div id="d2" class="detail-panel">
+      <b>Context modifier reasons:</b><br><span class='reason'>No context-modifier adjustments fired.</span>
+      <br><b>Top contributing events:</b><br><span class='reason'>M5.7 2024 Parker Butte, Nevada Earthquake (2024-12-09)</span><span class='reason'>M5.7 20 km ESE of Silver Springs, Nevada (2026-04-14)</span><span class='reason'>M5.6 11 km N of Redwood Valley, CA (2026-06-24)</span><span class='reason'>M5.2 24 km SW of Lamont, CA (2024-08-07)</span><span class='reason'>M5.2 5 km S of Julian, CA (2025-04-14)</span>
+    </div>
+  </td>
+</tr>
+<tr class="sev-LOW">
+  <td class="zone-name">Cascadia subduction zone</td>
+  <td class="mainshock">No active sequence</td>
+  <td class="prob">0.0%</td>
+  <td class="prob">0.5%</td>
+  <td class="prob">1.0%</td>
+  <td class="prob">1.0%</td>
+  <td class="prob final">1.0%</td>
+  <td><span class="pill pill-LOW">LOW</span></td>
+  <td class="mainshock">&mdash; pending</td>
+  <td>
+    <span class="toggle" onclick="tgl('d3')" tabindex="0" role="button">&#9662; details</span>
+    <div id="d3" class="detail-panel">
+      <b>Context modifier reasons:</b><br><span class='reason'>No context-modifier adjustments fired.</span>
+      <br><b>Top contributing events:</b><br><span class='reason'>M4.7 53 km WNW of Petrolia, CA (2024-12-05)</span><span class='reason'>M4.6 31 km W of Petrolia, CA (2025-05-26)</span><span class='reason'>M4.5 2025 Orcas Island, Washington (2025-03-03)</span><span class='reason'>M4.4 40 km WNW of Petrolia, CA (2024-12-05)</span><span class='reason'>M4.4 5 km SSW of Petrolia, CA (2024-10-24)</span>
+    </div>
+  </td>
+</tr>
+<tr class="sev-LOW">
+  <td class="zone-name">New Madrid seismic zone</td>
+  <td class="mainshock">No active sequence</td>
+  <td class="prob">0.0%</td>
+  <td class="prob">0.5%</td>
+  <td class="prob">1.0%</td>
+  <td class="prob">1.0%</td>
+  <td class="prob final">1.0%</td>
+  <td><span class="pill pill-LOW">LOW</span></td>
+  <td class="mainshock">&mdash; pending</td>
+  <td>
+    <span class="toggle" onclick="tgl('d4')" tabindex="0" role="button">&#9662; details</span>
+    <div id="d4" class="detail-panel">
+      <b>Context modifier reasons:</b><br><span class='reason'>No context-modifier adjustments fired.</span>
+      <br><b>Top contributing events:</b><br><span class='reason'>M4.0 1 km WNW of Cooter, Missouri (2026-04-23)</span><span class='reason'>M3.7 2 km E of Steele, Missouri (2024-11-03)</span><span class='reason'>M3.2 1 km SSW of Caruthersville, Missouri (2024-11-16)</span><span class='reason'>M3.1 4 km S of Puxico, Missouri (2025-09-06)</span><span class='reason'>M3.1 3 km SW of Blytheville, Arkansas (2025-08-01)</span>
+    </div>
+  </td>
+</tr>
+<tr class="sev-LOW">
+  <td class="zone-name">Oklahoma induced seismicity zone</td>
+  <td class="mainshock">No active sequence</td>
+  <td class="prob">0.0%</td>
+  <td class="prob">0.5%</td>
+  <td class="prob">1.0%</td>
+  <td class="prob">1.0%</td>
+  <td class="prob final">1.0%</td>
+  <td><span class="pill pill-LOW">LOW</span></td>
+  <td class="mainshock">&mdash; pending</td>
+  <td>
+    <span class="toggle" onclick="tgl('d5')" tabindex="0" role="button">&#9662; details</span>
+    <div id="d5" class="detail-panel">
+      <b>Context modifier reasons:</b><br><span class='reason'>No context-modifier adjustments fired.</span>
+      <br><b>Top contributing events:</b><br><span class='reason'>M3.7 8 km NW of Prague, Oklahoma (2025-09-28)</span><span class='reason'>M3.6 7 km ENE of Calumet, Oklahoma (2026-02-16)</span><span class='reason'>M3.6 8 km NW of Prague, Oklahoma (2025-09-28)</span><span class='reason'>M3.6 14 km SSE of Waynoka, Oklahoma (2024-07-15)</span><span class='reason'>M3.5 2 km ESE of Johnson, Oklahoma (2026-05-19)</span>
+    </div>
+  </td>
+</tr></tbody>
+</table>
+</div>
+<footer>Plain-Omori baseline = background rate + Reasenberg-Jones aftershock productivity from the single most recent event, no ML/agents (scripts/plain_omori_baseline.py). ML-1 = GradientBoostingClassifier prior, alone. Agent debate only (isolated) = the 10-agent, 3-round debate with NO ML-1 prior injected. Agent + ML-1 blend = same debate but with ML-1's prior blended in before the agents see it (previously mislabeled "Agent debate only" on this dashboard). Combined = the blend, context-modifier-adjusted, ML-2-corrected once ground truth accumulates. See FINDINGS_2026-07_negative_result.md for how these five compare on held-out data, and DESIGN.md for full methodology. Map: zone boundaries and tracked-zone mainshocks reflect this pipeline's own scoring; the last-24h overlay is raw USGS data, not a prediction.</footer>
+</body></html>
