@@ -190,14 +190,14 @@ function tgl(id) {
 </head><body>
 <div class="page">
 <h1>Earthquake Aftershock Forecast Dashboard</h1>
-<div class="subtitle">Generated 2026-09-03T10:14:51.153463+00:00 &middot; signal-aggregation demo, not an official hazard forecast</div>
+<div class="subtitle">Generated 2026-09-04T10:04:30.910236+00:00 &middot; signal-aggregation demo, not an official hazard forecast</div>
 <div class="intro">
 <p>A daily-updating forecast of M&ge;5.0 aftershock risk across six major fault zones, combining classical earthquake decay-law physics with machine learning. Independent research project, not an official hazard system &mdash; see the <a href="https://github.com/wasikatcern/AfterQuakeAI/blob/main/FINDINGS_2026-07_negative_result.md">honest backtest results</a> for what's actually held up.</p>
 </div>
 <div class="official-callout"><b>For official earthquake alerts and safety information, see <a href="https://www.usgs.gov">usgs.gov</a>.</b></div>
-<div class="status-banner ok"><span class="dot"></span><span class="label">Last updated:</span> <span class="value">2026-09-03 10:14:50 UTC (0.0h ago)</span></div>
-<details class="recent-runs"><summary>Recent runs (10)</summary><div class="run-row run-SUCCESS"><span>2026-09-03 10:14:50 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-02 10:04:46 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-01 10:39:08 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-08-31 11:59:54 UTC</span><span class="run-status">SUCCESS</span><span>67s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-08-30 10:50:13 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-08-29 11:53:07 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-08-28 17:48:27 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-08-27 16:58:44 UTC</span><span class="run-status">SUCCESS</span><span>69s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-08-26 06:26:57 UTC</span><span class="run-status">SUCCESS</span><span>83s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-08-25 06:24:30 UTC</span><span class="run-status">SUCCESS</span><span>67s</span><span class="run-zones">6/6</span></div></details>
-<div class="summary-row"><div class="chip chip-ELEVATED"><b>1</b> elevated</div><div class="chip chip-WATCH"><b>1</b> watch</div><div class="chip chip-LOW"><b>4</b> low</div></div>
+<div class="status-banner ok"><span class="dot"></span><span class="label">Last updated:</span> <span class="value">2026-09-04 10:04:30 UTC (0.0h ago)</span></div>
+<details class="recent-runs"><summary>Recent runs (10)</summary><div class="run-row run-SUCCESS"><span>2026-09-04 10:04:30 UTC</span><span class="run-status">SUCCESS</span><span>67s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-03 10:14:50 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-02 10:04:46 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-01 10:39:08 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-08-31 11:59:54 UTC</span><span class="run-status">SUCCESS</span><span>67s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-08-30 10:50:13 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-08-29 11:53:07 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-08-28 17:48:27 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-08-27 16:58:44 UTC</span><span class="run-status">SUCCESS</span><span>69s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-08-26 06:26:57 UTC</span><span class="run-status">SUCCESS</span><span>83s</span><span class="run-zones">6/6</span></div></details>
+<div class="summary-row"><div class="chip chip-ELEVATED"><b>0</b> elevated</div><div class="chip chip-WATCH"><b>1</b> watch</div><div class="chip chip-LOW"><b>5</b> low</div></div>
 
 <div class="map-section">
   <div class="map-wrap">
@@ -214,8 +214,8 @@ function tgl(id) {
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 (function () {
-  var ZONES = [{"id": "california_san_andreas", "name": "California / San Andreas system", "bounds": [[32.0, -124.0], [40.0, -114.0]], "label": "LOW", "probability": 0.0355, "plain_omori_prob": null}, {"id": "cascadia", "name": "Cascadia subduction zone", "bounds": [[40.0, -125.0], [49.0, -121.0]], "label": "LOW", "probability": 0.0101, "plain_omori_prob": null}, {"id": "oklahoma_induced", "name": "Oklahoma induced seismicity zone", "bounds": [[33.5, -103.0], [37.0, -94.5]], "label": "LOW", "probability": 0.0101, "plain_omori_prob": null}, {"id": "alaska_aleutian", "name": "Alaska-Aleutian subduction zone", "bounds": [[51.0, -170.0], [62.0, -130.0]], "label": "WATCH", "probability": 0.5492, "plain_omori_prob": null}, {"id": "new_madrid", "name": "New Madrid seismic zone", "bounds": [[35.0, -91.0], [38.0, -88.0]], "label": "LOW", "probability": 0.0101, "plain_omori_prob": null}, {"id": "japan_trench", "name": "Japan trench subduction zone", "bounds": [[30.0, 129.0], [46.0, 146.0]], "label": "ELEVATED", "probability": 0.8872, "plain_omori_prob": null}];
-  var MAINSHOCKS = [{"zone_id": "alaska_aleutian", "zone_name": "Alaska-Aleutian subduction zone", "label": "WATCH", "lat": 52.2132, "lon": -169.4456, "mag": 5.3, "place": "89 km SSW of Nikolski, Alaska", "time": "2026-09-01T06:44:36.948000+00:00", "depth_km": 26.001}, {"zone_id": "japan_trench", "zone_name": "Japan trench subduction zone", "label": "ELEVATED", "lat": 41.8495, "lon": 142.802, "mag": 6, "place": "32 km SSW of Honch\u014d, Japan", "time": "2026-08-23T13:44:53.389000+00:00", "depth_km": 41}];
+  var ZONES = [{"id": "california_san_andreas", "name": "California / San Andreas system", "bounds": [[32.0, -124.0], [40.0, -114.0]], "label": "LOW", "probability": 0.0437, "plain_omori_prob": null}, {"id": "cascadia", "name": "Cascadia subduction zone", "bounds": [[40.0, -125.0], [49.0, -121.0]], "label": "LOW", "probability": 0.0101, "plain_omori_prob": null}, {"id": "oklahoma_induced", "name": "Oklahoma induced seismicity zone", "bounds": [[33.5, -103.0], [37.0, -94.5]], "label": "LOW", "probability": 0.0101, "plain_omori_prob": null}, {"id": "alaska_aleutian", "name": "Alaska-Aleutian subduction zone", "bounds": [[51.0, -170.0], [62.0, -130.0]], "label": "WATCH", "probability": 0.5785, "plain_omori_prob": null}, {"id": "new_madrid", "name": "New Madrid seismic zone", "bounds": [[35.0, -91.0], [38.0, -88.0]], "label": "LOW", "probability": 0.0101, "plain_omori_prob": null}, {"id": "japan_trench", "name": "Japan trench subduction zone", "bounds": [[30.0, 129.0], [46.0, 146.0]], "label": "LOW", "probability": 0.3665, "plain_omori_prob": null}];
+  var MAINSHOCKS = [{"zone_id": "alaska_aleutian", "zone_name": "Alaska-Aleutian subduction zone", "label": "WATCH", "lat": 52.2579, "lon": -169.4088, "mag": 6.3, "place": "84 km SSW of Nikolski, Alaska", "time": "2026-09-03T11:17:24.056000+00:00", "depth_km": 35}, {"zone_id": "japan_trench", "zone_name": "Japan trench subduction zone", "label": "LOW", "lat": 41.8495, "lon": 142.802, "mag": 6, "place": "32 km SSW of Honch\u014d, Japan", "time": "2026-08-23T13:44:53.389000+00:00", "depth_km": 41}];
   var LABEL_COLORS = {"ELEVATED": "#c8434c", "WATCH": "#a8730f", "LOW": "#2f8f53"};
   var LABEL_CODES = {"ELEVATED": "E", "WATCH": "W", "LOW": "L"};
   var LIVE_FEED_URL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
@@ -319,39 +319,39 @@ function tgl(id) {
   <th>Combined (final)</th><th>Label</th><th>Actual outcome</th><th></th>
 </tr></thead>
 <tbody>
-<tr class="sev-ELEVATED">
-  <td class="zone-name">Japan trench subduction zone</td>
-  <td class="mainshock">M6.0 32 km SSW of Honchō, Japan</td>
-  <td class="prob">81.6%</td>
-  <td class="prob">47.5%</td>
-  <td class="prob">80.9%</td>
-  <td class="prob">68.2%</td>
-  <td class="prob final">88.7%</td>
-  <td><span class="pill pill-ELEVATED">ELEVATED</span></td>
+<tr class="sev-WATCH">
+  <td class="zone-name">Alaska-Aleutian subduction zone</td>
+  <td class="mainshock">M6.3 84 km SSW of Nikolski, Alaska</td>
+  <td class="prob">70.7%</td>
+  <td class="prob">41.5%</td>
+  <td class="prob">69.5%</td>
+  <td class="prob">57.9%</td>
+  <td class="prob final">57.9%</td>
+  <td><span class="pill pill-WATCH">WATCH</span></td>
   <td class="mainshock">&mdash; pending</td>
   <td>
     <span class="toggle" onclick="tgl('d0')" tabindex="0" role="button">&#9662; details</span>
     <div id="d0" class="detail-panel">
-      <b>Context modifier reasons:</b><br><span class='reason'>&bull; Observed Omori p=0.08 decaying slower than expected confirms elevated call -> mult +25%</span><span class='reason'>&bull; Observed 7d rate (10.0) exceeds Omori expectation (4.6) -> mult +10%</span>
-      <br><b>Top contributing events:</b><br><span class='reason'>M7.6 2025 Aomori Prefecture, Japan Earthquake (2025-12-08)</span><span class='reason'>M7.4 102 km ENE of Miyako, Japan (2026-04-20)</span><span class='reason'>M6.9 35 km ENE of Noda, Japan (2026-06-24)</span><span class='reason'>M6.8 15 km SE of Miyazaki, Japan (2025-01-13)</span><span class='reason'>M6.8 122 km E of Yamada, Japan (2025-11-09)</span>
+      <b>Context modifier reasons:</b><br><span class='reason'>No context-modifier adjustments fired.</span>
+      <br><b>Top contributing events:</b><br><span class='reason'>M7.3 2025 Sand Point, Alaska Earthquake (2025-07-16)</span><span class='reason'>M7.0 2025 Hubbard Glacier Earthquake (2025-12-06)</span><span class='reason'>M6.5 271 km WNW of Port McNeill, Canada (2024-09-15)</span><span class='reason'>M6.3 84 km SSW of Nikolski, Alaska (2026-09-03)</span><span class='reason'>M6.2 91 km SSE of Sand Point, Alaska (2025-07-20)</span>
     </div>
   </td>
 </tr>
-<tr class="sev-WATCH">
-  <td class="zone-name">Alaska-Aleutian subduction zone</td>
-  <td class="mainshock">M5.3 89 km SSW of Nikolski, Alaska</td>
-  <td class="prob">45.5%</td>
-  <td class="prob">72.7%</td>
-  <td class="prob">44.1%</td>
-  <td class="prob">54.9%</td>
-  <td class="prob final">54.9%</td>
-  <td><span class="pill pill-WATCH">WATCH</span></td>
+<tr class="sev-LOW">
+  <td class="zone-name">Japan trench subduction zone</td>
+  <td class="mainshock">M6.0 32 km SSW of Honchō, Japan</td>
+  <td class="prob">81.5%</td>
+  <td class="prob">18.6%</td>
+  <td class="prob">80.5%</td>
+  <td class="prob">56.3%</td>
+  <td class="prob final">36.6%</td>
+  <td><span class="pill pill-LOW">LOW</span></td>
   <td class="mainshock">&mdash; pending</td>
   <td>
     <span class="toggle" onclick="tgl('d1')" tabindex="0" role="button">&#9662; details</span>
     <div id="d1" class="detail-panel">
-      <b>Context modifier reasons:</b><br><span class='reason'>No context-modifier adjustments fired.</span>
-      <br><b>Top contributing events:</b><br><span class='reason'>M7.3 2025 Sand Point, Alaska Earthquake (2025-07-16)</span><span class='reason'>M7.0 2025 Hubbard Glacier Earthquake (2025-12-06)</span><span class='reason'>M6.5 271 km WNW of Port McNeill, Canada (2024-09-15)</span><span class='reason'>M6.2 91 km SSE of Sand Point, Alaska (2025-07-20)</span><span class='reason'>M6.0 12 km WNW of Susitna, Alaska (2025-11-27)</span>
+      <b>Context modifier reasons:</b><br><span class='reason'>&bull; Observed Omori p=0.21 decaying slower than expected contradicts suppressed call -> mult -35%</span>
+      <br><b>Top contributing events:</b><br><span class='reason'>M7.6 2025 Aomori Prefecture, Japan Earthquake (2025-12-08)</span><span class='reason'>M7.4 102 km ENE of Miyako, Japan (2026-04-20)</span><span class='reason'>M6.9 35 km ENE of Noda, Japan (2026-06-24)</span><span class='reason'>M6.8 15 km SE of Miyazaki, Japan (2025-01-13)</span><span class='reason'>M6.8 122 km E of Yamada, Japan (2025-11-09)</span>
     </div>
   </td>
 </tr>
@@ -359,10 +359,10 @@ function tgl(id) {
   <td class="zone-name">California / San Andreas system</td>
   <td class="mainshock">No active sequence</td>
   <td class="prob">4.7%</td>
-  <td class="prob">2.9%</td>
+  <td class="prob">2.7%</td>
   <td class="prob">4.2%</td>
-  <td class="prob">3.5%</td>
-  <td class="prob final">3.5%</td>
+  <td class="prob">4.4%</td>
+  <td class="prob final">4.4%</td>
   <td><span class="pill pill-LOW">LOW</span></td>
   <td class="mainshock">&mdash; pending</td>
   <td>
@@ -414,7 +414,7 @@ function tgl(id) {
   <td class="mainshock">No active sequence</td>
   <td class="prob">1.0%</td>
   <td class="prob">0.5%</td>
-  <td class="prob">1.1%</td>
+  <td class="prob">1.0%</td>
   <td class="prob">1.0%</td>
   <td class="prob final">1.0%</td>
   <td><span class="pill pill-LOW">LOW</span></td>
@@ -423,7 +423,7 @@ function tgl(id) {
     <span class="toggle" onclick="tgl('d5')" tabindex="0" role="button">&#9662; details</span>
     <div id="d5" class="detail-panel">
       <b>Context modifier reasons:</b><br><span class='reason'>No context-modifier adjustments fired.</span>
-      <br><b>Top contributing events:</b><br><span class='reason'>M5.0 38 km SSE of Spearman, Texas (2026-07-23)</span><span class='reason'>M3.7 8 km NW of Prague, Oklahoma (2025-09-28)</span><span class='reason'>M3.6 7 km ENE of Calumet, Oklahoma (2026-02-16)</span><span class='reason'>M3.6 8 km NW of Prague, Oklahoma (2025-09-28)</span><span class='reason'>M3.5 2 km ESE of Johnson, Oklahoma (2026-05-19)</span>
+      <br><b>Top contributing events:</b><br><span class='reason'>M5.0 38 km SSE of Spearman, Texas (2026-07-23)</span><span class='reason'>M3.7 8 km NW of Prague, Oklahoma (2025-09-28)</span><span class='reason'>M3.6 7 km ENE of Calumet, Oklahoma (2026-02-16)</span><span class='reason'>M3.6 2 km SW of Dibble, Oklahoma (2026-09-04)</span><span class='reason'>M3.6 8 km NW of Prague, Oklahoma (2025-09-28)</span>
     </div>
   </td>
 </tr></tbody>
