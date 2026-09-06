@@ -568,6 +568,7 @@
           <div class="opt"><input type="checkbox" name="researchFocus" id="rf-requirements" value="requirements" checked><label for="rf-requirements">Admission requirements</label></div>
           <div class="opt"><input type="checkbox" name="researchFocus" id="rf-deadlines" value="deadlines"><label for="rf-deadlines">Application deadlines</label></div>
           <div class="opt"><input type="checkbox" name="researchFocus" id="rf-funding" value="funding"><label for="rf-funding">Tuition &amp; funding/scholarships</label></div>
+          <div class="opt"><input type="checkbox" name="researchFocus" id="rf-fullyfunded" value="fullyfunded"><label for="rf-fullyfunded">Fully funded programs</label></div>
           <div class="opt"><input type="checkbox" name="researchFocus" id="rf-tests" value="tests"><label for="rf-tests">Standardized tests (GRE/TOEFL/IELTS)</label></div>
           <div class="opt"><input type="checkbox" name="researchFocus" id="rf-advisors" value="advisors"><label for="rf-advisors">Potential advisors / professors</label></div>
           <div class="opt"><input type="checkbox" name="researchFocus" id="rf-visa" value="visa"><label for="rf-visa">Student visa requirements</label></div>
@@ -870,6 +871,12 @@
         specificLabel: function(phrase, uni){ return capitalize(phrase) + ' at ' + uni + ' — tuition & scholarships'; },
         generalQuery: function(phrase, country){ return 'tuition fees and scholarships for ' + phrase + ' in ' + country; },
         generalLabel: function(phrase, country){ return 'Tuition fees & scholarships for ' + phrase + ' in ' + country; }
+      },
+      { value:'fullyfunded',
+        specificQuery: function(phrase, uni){ return 'fully funded ' + phrase + ' at ' + uni; },
+        specificLabel: function(phrase, uni){ return 'Fully funded ' + phrase + ' at ' + uni; },
+        generalQuery: function(phrase, country){ return 'fully funded ' + phrase + ' in ' + country; },
+        generalLabel: function(phrase, country){ return 'Fully funded ' + phrase + ' in ' + country; }
       },
       { value:'tests',
         specificQuery: function(phrase, uni){ return phrase + ' at ' + uni + ' GRE TOEFL IELTS requirements'; },
