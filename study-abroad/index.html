@@ -569,6 +569,7 @@
           <div class="opt"><input type="checkbox" name="researchFocus" id="rf-deadlines" value="deadlines"><label for="rf-deadlines">Application deadlines</label></div>
           <div class="opt"><input type="checkbox" name="researchFocus" id="rf-funding" value="funding"><label for="rf-funding">Tuition &amp; funding/scholarships</label></div>
           <div class="opt"><input type="checkbox" name="researchFocus" id="rf-tests" value="tests"><label for="rf-tests">Standardized tests (GRE/TOEFL/IELTS)</label></div>
+          <div class="opt"><input type="checkbox" name="researchFocus" id="rf-advisors" value="advisors"><label for="rf-advisors">Potential advisors / professors</label></div>
           <div class="opt"><input type="checkbox" name="researchFocus" id="rf-visa" value="visa"><label for="rf-visa">Student visa requirements</label></div>
           <div class="opt"><input type="checkbox" name="researchFocus" id="rf-cost" value="cost"><label for="rf-cost">Cost of living</label></div>
         </div>
@@ -875,6 +876,10 @@
         specificLabel: function(phrase, uni){ return capitalize(phrase) + ' at ' + uni + ' — GRE/TOEFL/IELTS requirements'; },
         generalQuery: function(phrase, country){ return 'GRE TOEFL IELTS requirements for ' + phrase + ' in ' + country; },
         generalLabel: function(phrase, country){ return 'GRE/TOEFL/IELTS requirements for ' + phrase + ' in ' + country; }
+      },
+      { value:'advisors', requiresUniversity:true,
+        specificQuery: function(phrase, uni, yf, subject){ return uni + ' ' + subject + ' department faculty research interests'; },
+        specificLabel: function(phrase, uni, yf, subject){ return 'Potential advisors & research topics in ' + subject + ' at ' + uni; }
       }
     ];
   }
@@ -946,20 +951,23 @@
             subjects.forEach(function(subject){
               var phrase = gradPhrase(subject, targetDegree);
               progCats.forEach(function(cat){
-                html += linkListItem(cat.specificLabel(phrase, uni, yearFull), cat.specificQuery(phrase, uni, yearFull));
+                html += linkListItem(cat.specificLabel(phrase, uni, yearFull, subject), cat.specificQuery(phrase, uni, yearFull, subject));
               });
             });
             html += '</ul></div>';
           });
         } else {
-          html += '<div class="result-group"><h4>General information</h4><ul class="link-list">';
-          subjects.forEach(function(subject){
-            var phrase = gradPhrase(subject, targetDegree);
-            progCats.forEach(function(cat){
-              html += linkListItem(cat.generalLabel(phrase, country, yearFull), cat.generalQuery(phrase, country, yearFull));
+          var generalCats = progCats.filter(function(c){ return !c.requiresUniversity; });
+          if(generalCats.length > 0){
+            html += '<div class="result-group"><h4>General information</h4><ul class="link-list">';
+            subjects.forEach(function(subject){
+              var phrase = gradPhrase(subject, targetDegree);
+              generalCats.forEach(function(cat){
+                html += linkListItem(cat.generalLabel(phrase, country, yearFull, subject), cat.generalQuery(phrase, country, yearFull, subject));
+              });
             });
-          });
-          html += '</ul></div>';
+            html += '</ul></div>';
+          }
         }
       }
 
