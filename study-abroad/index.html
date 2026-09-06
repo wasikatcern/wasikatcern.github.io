@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Abroad Planner</title>
+<meta name="description" content="A short questionnaire that helps students figure out what to research next when planning to study abroad, with ready-made search links.">
+<style>
+  :root{
+    --bg:#f6f7fb;
+    --card:#ffffff;
+    --text:#1c2230;
+    --muted:#5b6472;
+    --border:#e1e4ea;
+    --accent:#2457c5;
+    --accent-hover:#1a419e;
+    --accent-soft:#e9f0ff;
+    --chip-bg:#eef1f7;
+    --success:#1a7f4b;
+    --shadow: 0 1px 3px rgba(20,25,40,0.06), 0 8px 24px rgba(20,25,40,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#12151c;
+      --card:#1a1f29;
+      --text:#e8eaf0;
+      --muted:#9aa3b2;
+      --border:#2b3140;
+      --accent:#5b8dff;
+      --accent-hover:#83a9ff;
+      --accent-soft:#1c2740;
+      --chip-bg:#232a38;
+      --success:#4fd18a;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;
+  }
+  a{color:var(--accent);}
+  .wrap{
+    max-width:760px;
+    margin:0 auto;
+    padding:32px 20px 80px;
+  }
+  header.page-header{
+    text-align:center;
+    margin-bottom:28px;
+  }
+  header.page-header h1{
+    font-size:1.7rem;
+    margin:0 0 6px;
+  }
+  header.page-header p{
+    color:var(--muted);
+    margin:0;
+    font-size:0.98rem;
+  }
+  .backlink{
+    display:inline-block;
+    margin-bottom:18px;
+    font-size:0.85rem;
+    color:var(--muted);
+    text-decoration:none;
+  }
+  .backlink:hover{ color:var(--accent); }
+
+  .progress{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:28px;
+    gap:6px;
+  }
+  .progress .seg{
+    flex:1;
+    height:6px;
+    border-radius:4px;
+    background:var(--border);
+    position:relative;
+    overflow:hidden;
+  }
+  .progress .seg.active,.progress .seg.done{
+    background:var(--accent);
+  }
+  .step-labels{
+    display:flex;
+    justify-content:space-between;
+    font-size:0.72rem;
+    color:var(--muted);
+    margin-bottom:24px;
+    margin-top:-16px;
+  }
+  .step-labels span{flex:1;text-align:center;}
+  .step-labels span:first-child{text-align:left;}
+  .step-labels span:last-child{text-align:right;}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:28px 28px 24px;
+    box-shadow:var(--shadow);
+  }
+  .step{display:none;}
+  .step.active{display:block;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+
+  .step h2{
+    font-size:1.25rem;
+    margin:0 0 4px;
+  }
+  .step .hint{
+    color:var(--muted);
+    font-size:0.9rem;
+    margin:0 0 20px;
+  }
+  fieldset{
+    border:none;
+    padding:0;
+    margin:0 0 22px;
+  }
+  fieldset legend{
+    font-weight:600;
+    font-size:0.95rem;
+    margin-bottom:10px;
+    padding:0;
+  }
+  .options{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+    gap:8px;
+  }
+  .opt{
+    position:relative;
+  }
+  .opt input{
+    position:absolute;
+    opacity:0;
+    width:100%;
+    height:100%;
+    top:0;left:0;
+    margin:0;
+    cursor:pointer;
+  }
+  .opt label{
+    display:block;
+    padding:10px 14px;
+    border:1px solid var(--border);
+    border-radius:9px;
+    font-size:0.92rem;
+    cursor:pointer;
+    user-select:none;
+    transition:border-color .15s, background .15s;
+    background:var(--card);
+  }
+  .opt input:checked + label{
+    border-color:var(--accent);
+    background:var(--accent-soft);
+    color:var(--accent);
+    font-weight:600;
+  }
+  .opt input:focus-visible + label{
+    outline:2px solid var(--accent);
+    outline-offset:1px;
+  }
+  .other-input{
+    margin-top:10px;
+  }
+  .other-input input[type="text"]{
+    width:100%;
+    padding:10px 12px;
+    border:1px solid var(--border);
+    border-radius:9px;
+    background:var(--card);
+    color:var(--text);
+    font-size:0.92rem;
+  }
+  .other-input input[type="text"]:focus{
+    outline:2px solid var(--accent);
+    outline-offset:1px;
+  }
+  .muted-note{
+    font-size:0.82rem;
+    color:var(--muted);
+    margin-top:4px;
+  }
+
+  .uni-block{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:14px;
+  }
+  .uni-block h3{
+    margin:0 0 10px;
+    font-size:1rem;
+  }
+  .uni-add-row{
+    display:flex;
+    gap:8px;
+  }
+  .uni-add-row input[type="text"]{
+    flex:1;
+    padding:9px 12px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    background:var(--card);
+    color:var(--text);
+    font-size:0.9rem;
+  }
+  .uni-add-row button{
+    padding:9px 14px;
+    border-radius:8px;
+    border:1px solid var(--accent);
+    background:var(--accent-soft);
+    color:var(--accent);
+    font-weight:600;
+    cursor:pointer;
+    font-size:0.85rem;
+  }
+  .uni-add-row button:hover{ background:var(--accent); color:#fff; }
+  .chip-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:10px;
+  }
+  .chip{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--chip-bg);
+    border-radius:20px;
+    padding:6px 8px 6px 12px;
+    font-size:0.85rem;
+  }
+  .chip button{
+    border:none;
+    background:none;
+    color:var(--muted);
+    cursor:pointer;
+    font-size:0.95rem;
+    line-height:1;
+    padding:2px 6px;
+    border-radius:50%;
+  }
+  .chip button:hover{ color:#c0392b; background:rgba(192,57,43,0.12); }
+
+  .nav-buttons{
+    display:flex;
+    justify-content:space-between;
+    margin-top:24px;
+  }
+  .btn{
+    padding:11px 22px;
+    border-radius:9px;
+    font-size:0.95rem;
+    font-weight:600;
+    cursor:pointer;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+  }
+  .btn.primary{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#fff;
+  }
+  .btn.primary:hover{ background:var(--accent-hover); border-color:var(--accent-hover); }
+  .btn:disabled{
+    opacity:0.45;
+    cursor:not-allowed;
+  }
+  .btn.ghost{
+    background:none;
+    border-color:transparent;
+    color:var(--muted);
+  }
+  .btn.ghost:hover{ color:var(--accent); }
+
+  .results h2{margin-top:0;}
+  .result-country{
+    margin-bottom:26px;
+  }
+  .result-country > h3{
+    font-size:1.05rem;
+    margin:0 0 4px;
+    padding-bottom:6px;
+    border-bottom:2px solid var(--accent-soft);
+  }
+  .result-group h4{
+    font-size:0.9rem;
+    color:var(--muted);
+    margin:14px 0 8px;
+    font-weight:600;
+  }
+  .link-list{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .link-list li a{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:11px 14px;
+    border:1px solid var(--border);
+    border-radius:9px;
+    text-decoration:none;
+    color:var(--text);
+    font-size:0.92rem;
+    transition:border-color .15s, transform .1s;
+  }
+  .link-list li a:hover{
+    border-color:var(--accent);
+    color:var(--accent);
+  }
+  .link-list li a .arrow{
+    color:var(--muted);
+    flex-shrink:0;
+  }
+  .link-list li a:hover .arrow{ color:var(--accent); }
+
+  .summary-box{
+    background:var(--accent-soft);
+    border-radius:10px;
+    padding:14px 16px;
+    font-size:0.85rem;
+    color:var(--text);
+    margin-bottom:22px;
+  }
+  .summary-box b{ color:var(--accent); }
+
+  footer.page-footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:0.8rem;
+    margin-top:28px;
+  }
+  footer.page-footer a{ color:var(--muted); text-decoration:underline; }
+
+  @media (max-width:480px){
+    .card{padding:20px 18px 18px;}
+    .step-labels{display:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="backlink" href="/">&larr; Back to homepage</a>
+
+  <header class="page-header">
+    <h1>Study Abroad Planner</h1>
+    <p>Answer a few quick questions and get a personalized set of search links to start your research.</p>
+  </header>
+
+  <div class="progress" id="progressBar">
+    <div class="seg active" data-i="0"></div>
+    <div class="seg" data-i="1"></div>
+    <div class="seg" data-i="2"></div>
+    <div class="seg" data-i="3"></div>
+    <div class="seg" data-i="4"></div>
+  </div>
+  <div class="step-labels">
+    <span>Your background</span>
+    <span>Target program</span>
+    <span>Countries</span>
+    <span>Universities</span>
+    <span>Results</span>
+  </div>
+
+  <div class="card">
+
+    <!-- STEP 1 -->
+    <div class="step active" data-step="0">
+      <h2>Tell us where you are now</h2>
+      <p class="hint">This helps frame the questions that follow.</p>
+
+      <fieldset>
+        <legend>What degree program are you currently in?</legend>
+        <div class="options" data-group="currentDegree">
+          <div class="opt"><input type="radio" name="currentDegree" id="cd-hs" value="High school"><label for="cd-hs">High school</label></div>
+          <div class="opt"><input type="radio" name="currentDegree" id="cd-bs" value="Bachelor's"><label for="cd-bs">Bachelor's</label></div>
+          <div class="opt"><input type="radio" name="currentDegree" id="cd-ms" value="Master's"><label for="cd-ms">Master's</label></div>
+          <div class="opt"><input type="radio" name="currentDegree" id="cd-phd" value="PhD"><label for="cd-phd">PhD</label></div>
+          <div class="opt"><input type="radio" name="currentDegree" id="cd-postdoc" value="Postdoc"><label for="cd-postdoc">Postdoc</label></div>
+          <div class="opt"><input type="radio" name="currentDegree" id="cd-other" value="Other"><label for="cd-other">Other</label></div>
+        </div>
+        <div class="other-input" id="currentDegreeOtherWrap" style="display:none;">
+          <input type="text" id="currentDegreeOther" placeholder="Please specify">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Which year are you in?</legend>
+        <div class="options" data-group="currentYear">
+          <div class="opt"><input type="radio" name="currentYear" id="cy-1" value="1st year"><label for="cy-1">1st year</label></div>
+          <div class="opt"><input type="radio" name="currentYear" id="cy-2" value="2nd year"><label for="cy-2">2nd year</label></div>
+          <div class="opt"><input type="radio" name="currentYear" id="cy-3" value="3rd year"><label for="cy-3">3rd year</label></div>
+          <div class="opt"><input type="radio" name="currentYear" id="cy-4" value="4th year"><label for="cy-4">4th year</label></div>
+          <div class="opt"><input type="radio" name="currentYear" id="cy-final" value="Final year"><label for="cy-final">Final year</label></div>
+          <div class="opt"><input type="radio" name="currentYear" id="cy-grad" value="Already graduated"><label for="cy-grad">Already graduated</label></div>
+          <div class="opt"><input type="radio" name="currentYear" id="cy-other" value="Other"><label for="cy-other">Other</label></div>
+        </div>
+        <div class="other-input" id="currentYearOtherWrap" style="display:none;">
+          <input type="text" id="currentYearOther" placeholder="Please specify">
+        </div>
+      </fieldset>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step" data-step="1">
+      <h2>What do you want to study next?</h2>
+      <p class="hint">Choose the degree level and the subject(s) you're interested in.</p>
+
+      <fieldset>
+        <legend>Which degree program are you interested in?</legend>
+        <div class="options" data-group="targetDegree">
+          <div class="opt"><input type="radio" name="targetDegree" id="td-bs" value="Bachelor's"><label for="td-bs">Bachelor's</label></div>
+          <div class="opt"><input type="radio" name="targetDegree" id="td-ms" value="Master's"><label for="td-ms">Master's</label></div>
+          <div class="opt"><input type="radio" name="targetDegree" id="td-phd" value="PhD"><label for="td-phd">PhD</label></div>
+          <div class="opt"><input type="radio" name="targetDegree" id="td-postdoc" value="Postdoc / research position"><label for="td-postdoc">Postdoc</label></div>
+          <div class="opt"><input type="radio" name="targetDegree" id="td-other" value="Other"><label for="td-other">Other</label></div>
+        </div>
+        <div class="other-input" id="targetDegreeOtherWrap" style="display:none;">
+          <input type="text" id="targetDegreeOther" placeholder="Please specify">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Which subject(s) are you interested in? (select all that apply)</legend>
+        <div class="options" data-group="subjects" data-multi="true">
+          <div class="opt"><input type="checkbox" name="subjects" id="su-physics" value="Physics"><label for="su-physics">Physics</label></div>
+          <div class="opt"><input type="checkbox" name="subjects" id="su-chem" value="Chemistry"><label for="su-chem">Chemistry</label></div>
+          <div class="opt"><input type="checkbox" name="subjects" id="su-bio" value="Biology / Life Sciences"><label for="su-bio">Biology</label></div>
+          <div class="opt"><input type="checkbox" name="subjects" id="su-math" value="Mathematics"><label for="su-math">Mathematics</label></div>
+          <div class="opt"><input type="checkbox" name="subjects" id="su-cs" value="Computer Science"><label for="su-cs">Computer Science</label></div>
+          <div class="opt"><input type="checkbox" name="subjects" id="su-eng" value="Engineering"><label for="su-eng">Engineering</label></div>
+          <div class="opt"><input type="checkbox" name="subjects" id="su-econ" value="Economics / Finance"><label for="su-econ">Economics</label></div>
+          <div class="opt"><input type="checkbox" name="subjects" id="su-med" value="Medicine / Health Sciences"><label for="su-med">Medicine</label></div>
+          <div class="opt"><input type="checkbox" name="subjects" id="su-social" value="Social Sciences"><label for="su-social">Social Sciences</label></div>
+          <div class="opt"><input type="checkbox" name="subjects" id="su-arts" value="Arts &amp; Humanities"><label for="su-arts">Arts &amp; Humanities</label></div>
+          <div class="opt"><input type="checkbox" name="subjects" id="su-other" value="Other"><label for="su-other">Other</label></div>
+        </div>
+        <div class="other-input" id="subjectsOtherWrap" style="display:none;">
+          <input type="text" id="subjectsOther" placeholder="Please specify (comma-separate if several)">
+        </div>
+      </fieldset>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step" data-step="2">
+      <h2>Where do you want to study?</h2>
+      <p class="hint">Select all countries you're considering.</p>
+
+      <fieldset>
+        <legend>Countries of interest</legend>
+        <div class="options" data-group="countries" data-multi="true">
+          <div class="opt"><input type="checkbox" name="countries" id="co-usa" value="USA"><label for="co-usa">USA</label></div>
+          <div class="opt"><input type="checkbox" name="countries" id="co-uk" value="UK"><label for="co-uk">UK</label></div>
+          <div class="opt"><input type="checkbox" name="countries" id="co-germany" value="Germany"><label for="co-germany">Germany</label></div>
+          <div class="opt"><input type="checkbox" name="countries" id="co-canada" value="Canada"><label for="co-canada">Canada</label></div>
+          <div class="opt"><input type="checkbox" name="countries" id="co-australia" value="Australia"><label for="co-australia">Australia</label></div>
+          <div class="opt"><input type="checkbox" name="countries" id="co-switzerland" value="Switzerland"><label for="co-switzerland">Switzerland</label></div>
+          <div class="opt"><input type="checkbox" name="countries" id="co-france" value="France"><label for="co-france">France</label></div>
+          <div class="opt"><input type="checkbox" name="countries" id="co-netherlands" value="Netherlands"><label for="co-netherlands">Netherlands</label></div>
+          <div class="opt"><input type="checkbox" name="countries" id="co-sweden" value="Sweden"><label for="co-sweden">Sweden</label></div>
+          <div class="opt"><input type="checkbox" name="countries" id="co-japan" value="Japan"><label for="co-japan">Japan</label></div>
+          <div class="opt"><input type="checkbox" name="countries" id="co-southkorea" value="South Korea"><label for="co-southkorea">South Korea</label></div>
+          <div class="opt"><input type="checkbox" name="countries" id="co-singapore" value="Singapore"><label for="co-singapore">Singapore</label></div>
+          <div class="opt"><input type="checkbox" name="countries" id="co-other" value="Other"><label for="co-other">Other</label></div>
+        </div>
+        <div class="other-input" id="countriesOtherWrap" style="display:none;">
+          <input type="text" id="countriesOther" placeholder="Please specify (comma-separate if several)">
+        </div>
+      </fieldset>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step" data-step="3">
+      <h2>Any specific universities in mind?</h2>
+      <p class="hint">Optional. For each country you picked, add specific universities you're interested in — or leave it blank and we'll give you general search links for that country instead.</p>
+      <div id="uniBlocks"></div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step" data-step="4">
+      <div class="results">
+        <h2>Your research starting points</h2>
+        <div class="summary-box" id="summaryBox"></div>
+        <div id="resultsContainer"></div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn ghost" id="backBtn" style="visibility:hidden;">&larr; Back</button>
+      <button class="btn primary" id="nextBtn">Next &rarr;</button>
+    </div>
+
+  </div>
+
+  <footer class="page-footer">
+    <p>Search links open on Google in a new tab — nothing here is submitted anywhere. <a href="#" id="restartLink">Start over</a></p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var state = {
+    currentDegree: null, currentDegreeOther: '',
+    currentYear: null, currentYearOther: '',
+    targetDegree: null, targetDegreeOther: '',
+    subjects: [], subjectsOther: '',
+    countries: [], countriesOther: '',
+    universities: {} // countryLabel -> [uni, uni, ...]
+  };
+
+  var stepEls = document.querySelectorAll('.step');
+  var totalSteps = stepEls.length;
+  var current = 0;
+
+  var backBtn = document.getElementById('backBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var progressSegs = document.querySelectorAll('#progressBar .seg');
+
+  function toggleOtherInput(radioOrCheckboxGroupSelector, otherValue, wrapId){
+    var wrap = document.getElementById(wrapId);
+    var checked = document.querySelectorAll(radioOrCheckboxGroupSelector + ':checked');
+    var showOther = false;
+    checked.forEach(function(el){ if(el.value === otherValue) showOther = true; });
+    wrap.style.display = showOther ? 'block' : 'none';
+  }
+
+  document.querySelectorAll('input[name="currentDegree"]').forEach(function(el){
+    el.addEventListener('change', function(){ toggleOtherInput('input[name="currentDegree"]', 'Other', 'currentDegreeOtherWrap'); });
+  });
+  document.querySelectorAll('input[name="currentYear"]').forEach(function(el){
+    el.addEventListener('change', function(){ toggleOtherInput('input[name="currentYear"]', 'Other', 'currentYearOtherWrap'); });
+  });
+  document.querySelectorAll('input[name="targetDegree"]').forEach(function(el){
+    el.addEventListener('change', function(){ toggleOtherInput('input[name="targetDegree"]', 'Other', 'targetDegreeOtherWrap'); });
+  });
+  document.querySelectorAll('input[name="subjects"]').forEach(function(el){
+    el.addEventListener('change', function(){ toggleOtherInput('input[name="subjects"]', 'Other', 'subjectsOtherWrap'); });
+  });
+  document.querySelectorAll('input[name="countries"]').forEach(function(el){
+    el.addEventListener('change', function(){ toggleOtherInput('input[name="countries"]', 'Other', 'countriesOtherWrap'); });
+  });
+
+  function getCheckedValues(name){
+    var vals = [];
+    document.querySelectorAll('input[name="'+name+'"]:checked').forEach(function(el){ vals.push(el.value); });
+    return vals;
+  }
+  function getCheckedValue(name){
+    var el = document.querySelector('input[name="'+name+'"]:checked');
+    return el ? el.value : null;
+  }
+  function splitCustom(text){
+    return text.split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+  }
+
+  function validateStep(i){
+    if(i === 0){
+      var deg = getCheckedValue('currentDegree');
+      var yr = getCheckedValue('currentYear');
+      if(!deg || (deg === 'Other' && !document.getElementById('currentDegreeOther').value.trim())) return false;
+      if(!yr || (yr === 'Other' && !document.getElementById('currentYearOther').value.trim())) return false;
+      return true;
+    }
+    if(i === 1){
+      var tdeg = getCheckedValue('targetDegree');
+      if(!tdeg || (tdeg === 'Other' && !document.getElementById('targetDegreeOther').value.trim())) return false;
+      var subs = getCheckedValues('subjects');
+      if(subs.length === 0) return false;
+      if(subs.indexOf('Other') !== -1 && !document.getElementById('subjectsOther').value.trim()) return false;
+      return true;
+    }
+    if(i === 2){
+      var countries = getCheckedValues('countries');
+      if(countries.length === 0) return false;
+      if(countries.indexOf('Other') !== -1 && !document.getElementById('countriesOther').value.trim()) return false;
+      return true;
+    }
+    return true;
+  }
+
+  function resolveFinalSubjects(){
+    var subs = getCheckedValues('subjects').filter(function(s){ return s !== 'Other'; });
+    if(getCheckedValues('subjects').indexOf('Other') !== -1){
+      subs = subs.concat(splitCustom(document.getElementById('subjectsOther').value));
+    }
+    return subs;
+  }
+  function resolveFinalCountries(){
+    var countries = getCheckedValues('countries').filter(function(c){ return c !== 'Other'; });
+    if(getCheckedValues('countries').indexOf('Other') !== -1){
+      countries = countries.concat(splitCustom(document.getElementById('countriesOther').value));
+    }
+    return countries;
+  }
+  function resolveDegreeLabel(name, otherId){
+    var v = getCheckedValue(name);
+    if(v === 'Other') return document.getElementById(otherId).value.trim() || 'Other';
+    return v;
+  }
+
+  function buildUniBlocks(){
+    var container = document.getElementById('uniBlocks');
+    container.innerHTML = '';
+    var countries = resolveFinalCountries();
+    countries.forEach(function(country){
+      if(!state.universities[country]) state.universities[country] = [];
+      var block = document.createElement('div');
+      block.className = 'uni-block';
+      block.innerHTML =
+        '<h3>' + escapeHtml(country) + '</h3>' +
+        '<div class="uni-add-row">' +
+          '<input type="text" placeholder="e.g. Stanford University" class="uni-input">' +
+          '<button type="button" class="uni-add-btn">Add</button>' +
+        '</div>' +
+        '<div class="chip-list"></div>' +
+        '<p class="muted-note">Leave empty for general search links about ' + escapeHtml(country) + '.</p>';
+      container.appendChild(block);
+
+      var input = block.querySelector('.uni-input');
+      var addBtn = block.querySelector('.uni-add-btn');
+      var chipList = block.querySelector('.chip-list');
+
+      function renderChips(){
+        chipList.innerHTML = '';
+        state.universities[country].forEach(function(uni, idx){
+          var chip = document.createElement('span');
+          chip.className = 'chip';
+          chip.innerHTML = '<span></span><button type="button" aria-label="Remove">&times;</button>';
+          chip.querySelector('span').textContent = uni;
+          chip.querySelector('button').addEventListener('click', function(){
+            state.universities[country].splice(idx, 1);
+            renderChips();
+          });
+          chipList.appendChild(chip);
+        });
+      }
+      function addUni(){
+        var val = input.value.trim();
+        if(!val) return;
+        state.universities[country].push(val);
+        input.value = '';
+        renderChips();
+        input.focus();
+      }
+      addBtn.addEventListener('click', addUni);
+      input.addEventListener('keydown', function(e){
+        if(e.key === 'Enter'){ e.preventDefault(); addUni(); }
+      });
+      renderChips();
+    });
+  }
+
+  function escapeHtml(str){
+    var d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  function gradPhrase(subject, degree){
+    var d = degree.toLowerCase();
+    if(d.indexOf("bachelor") !== -1) return "undergraduate program in " + subject;
+    if(d.indexOf("postdoc") !== -1) return "postdoctoral research position in " + subject;
+    if(d === 'master\'s' || d === 'phd' || d.indexOf('master') !== -1 || d.indexOf('phd') !== -1 || d.indexOf('doctor') !== -1){
+      return "graduate school of " + subject;
+    }
+    return degree + " program in " + subject;
+  }
+
+  function googleSearchLink(query){
+    return 'https://www.google.com/search?q=' + encodeURIComponent(query);
+  }
+
+  function buildResults(){
+    var targetDegree = resolveDegreeLabel('targetDegree', 'targetDegreeOther');
+    var subjects = resolveFinalSubjects();
+    var countries = resolveFinalCountries();
+    var currentDegree = resolveDegreeLabel('currentDegree', 'currentDegreeOther');
+    var currentYear = getCheckedValue('currentYear') === 'Other' ? document.getElementById('currentYearOther').value.trim() : getCheckedValue('currentYear');
+
+    var summary = document.getElementById('summaryBox');
+    summary.innerHTML = 'Currently: <b>' + escapeHtml(currentDegree) + '</b> (' + escapeHtml(currentYear) + ') &nbsp;&middot;&nbsp; ' +
+      'Interested in: <b>' + escapeHtml(targetDegree) + '</b> in <b>' + escapeHtml(subjects.join(', ')) + '</b> &nbsp;&middot;&nbsp; ' +
+      'Countries: <b>' + escapeHtml(countries.join(', ')) + '</b>';
+
+    var container = document.getElementById('resultsContainer');
+    container.innerHTML = '';
+
+    countries.forEach(function(country){
+      var unis = state.universities[country] || [];
+      var countryDiv = document.createElement('div');
+      countryDiv.className = 'result-country';
+      var html = '<h3>' + escapeHtml(country) + '</h3>';
+
+      if(unis.length > 0){
+        unis.forEach(function(uni){
+          html += '<div class="result-group"><h4>' + escapeHtml(uni) + '</h4><ul class="link-list">';
+          subjects.forEach(function(subject){
+            var phrase = gradPhrase(subject, targetDegree);
+            var query = phrase + ' at ' + uni + ' requirements';
+            html += '<li><a href="' + googleSearchLink(query) + '" target="_blank" rel="noopener">' +
+              '<span>' + escapeHtml(capitalize(phrase) + ' at ' + uni + ' — requirements') + '</span>' +
+              '<span class="arrow">&#8599;</span></a></li>';
+          });
+          html += '</ul></div>';
+        });
+      } else {
+        html += '<div class="result-group"><h4>General information</h4><ul class="link-list">';
+        subjects.forEach(function(subject){
+          var phrase = gradPhrase(subject, targetDegree);
+          var query = 'general information about ' + phrase + ' in ' + country;
+          html += '<li><a href="' + googleSearchLink(query) + '" target="_blank" rel="noopener">' +
+            '<span>' + escapeHtml('General information about ' + phrase + ' in ' + country) + '</span>' +
+            '<span class="arrow">&#8599;</span></a></li>';
+        });
+        html += '</ul></div>';
+      }
+
+      countryDiv.innerHTML = html;
+      container.appendChild(countryDiv);
+    });
+  }
+
+  function capitalize(s){
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+
+  function showStep(i){
+    stepEls.forEach(function(el){
+      el.classList.toggle('active', parseInt(el.getAttribute('data-step'),10) === i);
+    });
+    progressSegs.forEach(function(seg){
+      var idx = parseInt(seg.getAttribute('data-i'),10);
+      seg.classList.toggle('active', idx === i);
+      seg.classList.toggle('done', idx < i);
+    });
+    backBtn.style.visibility = i === 0 ? 'hidden' : 'visible';
+    nextBtn.textContent = i === totalSteps - 2 ? 'See results →' : (i === totalSteps - 1 ? 'Done' : 'Next →');
+    if(i === totalSteps - 1) nextBtn.style.display = 'none'; else nextBtn.style.display = 'inline-block';
+    nextBtn.disabled = !validateStep(i);
+  }
+
+  function attachLiveValidation(){
+    document.querySelectorAll('.card').forEach(function(card){
+      card.addEventListener('input', function(){ nextBtn.disabled = !validateStep(current); });
+      card.addEventListener('change', function(){ nextBtn.disabled = !validateStep(current); });
+    });
+  }
+
+  nextBtn.addEventListener('click', function(){
+    if(!validateStep(current)) return;
+    if(current === 2){ buildUniBlocks(); }
+    if(current === 3){ buildResults(); }
+    if(current < totalSteps - 1){
+      current++;
+      showStep(current);
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+  });
+  backBtn.addEventListener('click', function(){
+    if(current > 0){
+      current--;
+      showStep(current);
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+  });
+  document.getElementById('restartLink').addEventListener('click', function(e){
+    e.preventDefault();
+    location.reload();
+  });
+
+  attachLiveValidation();
+  showStep(current);
+})();
+</script>
+
+</body>
+</html>
