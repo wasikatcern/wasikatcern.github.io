@@ -774,7 +774,7 @@
       block.className = 'uni-block';
 
       var resourceLinksHtml = subjects.map(function(subject){
-        var query = 'best universities for ' + targetDegree + ' programs in ' + subject + ' in ' + country;
+        var query = 'top universities for ' + targetDegree + ' programs in ' + subject + ' in ' + country;
         return '<li><a href="' + googleSearchLink(query) + '" target="_blank" rel="noopener">' +
           '<span>Find universities for ' + escapeHtml(subject) + ' in ' + escapeHtml(country) + '</span>' +
           '<span class="arrow">&#8599;</span></a></li>';
