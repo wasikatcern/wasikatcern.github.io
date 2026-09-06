@@ -200,6 +200,23 @@
     margin:0 0 10px;
     font-size:1rem;
   }
+  .resource-box{
+    background:var(--accent-soft);
+    border-radius:9px;
+    padding:12px 14px 14px;
+    margin-bottom:14px;
+  }
+  .resource-box .resource-hint{
+    font-size:0.82rem;
+    color:var(--muted);
+    margin:0 0 8px;
+  }
+  .resource-box .link-list{ gap:6px; }
+  .resource-box .link-list li a{
+    padding:8px 12px;
+    font-size:0.85rem;
+    background:var(--card);
+  }
   .uni-add-row{
     display:flex;
     gap:8px;
@@ -417,7 +434,7 @@
 
     <!-- STEP 1 -->
     <div class="step active" data-step="0">
-      <h2>Tell us where you are now</h2>
+      <h2>Tell us where you are now or last completed degree</h2>
       <p class="hint">This helps frame the questions that follow.</p>
 
       <fieldset>
@@ -427,7 +444,6 @@
           <div class="opt"><input type="radio" name="currentDegree" id="cd-bs" value="Bachelor's"><label for="cd-bs">Bachelor's</label></div>
           <div class="opt"><input type="radio" name="currentDegree" id="cd-ms" value="Master's"><label for="cd-ms">Master's</label></div>
           <div class="opt"><input type="radio" name="currentDegree" id="cd-phd" value="PhD"><label for="cd-phd">PhD</label></div>
-          <div class="opt"><input type="radio" name="currentDegree" id="cd-postdoc" value="Postdoc"><label for="cd-postdoc">Postdoc</label></div>
           <div class="opt"><input type="radio" name="currentDegree" id="cd-other" value="Other"><label for="cd-other">Other</label></div>
         </div>
         <div class="other-input" id="currentDegreeOtherWrap" style="display:none;">
@@ -727,18 +743,51 @@
     return v;
   }
 
+  var countryExampleUni = {
+    'USA': 'Stanford University',
+    'UK': 'University of Oxford',
+    'Germany': 'LMU Munich',
+    'Canada': 'University of Toronto',
+    'Australia': 'University of Melbourne',
+    'Switzerland': 'ETH Zurich',
+    'France': 'Sorbonne University',
+    'Netherlands': 'University of Amsterdam',
+    'Sweden': 'Uppsala University',
+    'Japan': 'University of Tokyo',
+    'South Korea': 'Seoul National University',
+    'Singapore': 'National University of Singapore'
+  };
+  function unamePlaceholder(country){
+    var uni = countryExampleUni[country];
+    return uni ? ('e.g. ' + uni) : 'Type a university name';
+  }
+
   function buildUniBlocks(){
     var container = document.getElementById('uniBlocks');
     container.innerHTML = '';
     var countries = resolveFinalCountries();
+    var subjects = resolveFinalSubjects();
+    var targetDegree = resolveDegreeLabel('targetDegree', 'targetDegreeOther');
     countries.forEach(function(country){
       if(!state.universities[country]) state.universities[country] = [];
       var block = document.createElement('div');
       block.className = 'uni-block';
+
+      var resourceLinksHtml = subjects.map(function(subject){
+        var query = 'best universities for ' + targetDegree + ' programs in ' + subject + ' in ' + country;
+        return '<li><a href="' + googleSearchLink(query) + '" target="_blank" rel="noopener">' +
+          '<span>Find universities for ' + escapeHtml(subject) + ' in ' + escapeHtml(country) + '</span>' +
+          '<span class="arrow">&#8599;</span></a></li>';
+      }).join('');
+
       block.innerHTML =
         '<h3>' + escapeHtml(country) + '</h3>' +
+        '<div class="resource-box">' +
+          '<p class="resource-hint">Not sure which universities to consider? Start here:</p>' +
+          '<ul class="link-list">' + resourceLinksHtml + '</ul>' +
+        '</div>' +
         '<div class="uni-add-row">' +
-          '<input type="text" placeholder="e.g. Stanford University" class="uni-input">' +
+          '<input type="text" placeholder="' + escapeHtml(unamePlaceholder(country)) + '" class="uni-input">' +
           '<button type="button" class="uni-add-btn">Add</button>' +
         '</div>' +
         '<div class="chip-list"></div>' +
