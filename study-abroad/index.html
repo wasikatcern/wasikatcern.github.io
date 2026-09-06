@@ -340,6 +340,36 @@
   }
   .summary-box b{ color:var(--accent); }
 
+  .results-actions{
+    display:flex;
+    gap:10px;
+    margin-top:22px;
+    flex-wrap:wrap;
+  }
+  .results-actions .btn{
+    padding:9px 16px;
+    font-size:0.85rem;
+  }
+
+  .result-group h4 .cat-tag{
+    display:inline-block;
+    font-size:0.72rem;
+    font-weight:600;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border-radius:5px;
+    padding:2px 7px;
+    margin-right:8px;
+    vertical-align:middle;
+  }
+
+  @media print{
+    .backlink, .progress, .step-labels, .nav-buttons, footer.page-footer, .results-actions{ display:none !important; }
+    body{ background:#fff; }
+    .card{ box-shadow:none; border:none; }
+    .link-list li a{ color:#000; }
+  }
+
   footer.page-footer{
     text-align:center;
     color:var(--muted);
@@ -370,12 +400,16 @@
     <div class="seg" data-i="2"></div>
     <div class="seg" data-i="3"></div>
     <div class="seg" data-i="4"></div>
+    <div class="seg" data-i="5"></div>
+    <div class="seg" data-i="6"></div>
   </div>
   <div class="step-labels">
-    <span>Your background</span>
+    <span>Background</span>
     <span>Target program</span>
+    <span>Timeline</span>
     <span>Countries</span>
     <span>Universities</span>
+    <span>Research focus</span>
     <span>Results</span>
   </div>
 
@@ -460,6 +494,20 @@
 
     <!-- STEP 3 -->
     <div class="step" data-step="2">
+      <h2>When are you planning to start?</h2>
+      <p class="hint">Your target admission term — we'll fold this into the search links so results are timely.</p>
+
+      <fieldset>
+        <legend>Target admission year</legend>
+        <div class="options" data-group="admissionYear" id="admissionYearOptions" data-multi="false"></div>
+        <div class="other-input" id="admissionYearOtherWrap" style="display:none;">
+          <input type="text" id="admissionYearOther" placeholder="Please specify (e.g. Fall 2030)">
+        </div>
+      </fieldset>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step" data-step="3">
       <h2>Where do you want to study?</h2>
       <p class="hint">Select all countries you're considering.</p>
 
@@ -486,19 +534,40 @@
       </fieldset>
     </div>
 
-    <!-- STEP 4 -->
-    <div class="step" data-step="3">
+    <!-- STEP 5 -->
+    <div class="step" data-step="4">
       <h2>Any specific universities in mind?</h2>
       <p class="hint">Optional. For each country you picked, add specific universities you're interested in — or leave it blank and we'll give you general search links for that country instead.</p>
       <div id="uniBlocks"></div>
     </div>
 
-    <!-- STEP 5 -->
-    <div class="step" data-step="4">
+    <!-- STEP 6 -->
+    <div class="step" data-step="5">
+      <h2>What would you like to research?</h2>
+      <p class="hint">Select all the topics you want ready-made search links for.</p>
+      <fieldset>
+        <legend>Research topics</legend>
+        <div class="options" data-group="researchFocus" data-multi="true">
+          <div class="opt"><input type="checkbox" name="researchFocus" id="rf-requirements" value="requirements" checked><label for="rf-requirements">Admission requirements</label></div>
+          <div class="opt"><input type="checkbox" name="researchFocus" id="rf-deadlines" value="deadlines"><label for="rf-deadlines">Application deadlines</label></div>
+          <div class="opt"><input type="checkbox" name="researchFocus" id="rf-funding" value="funding"><label for="rf-funding">Tuition &amp; funding/scholarships</label></div>
+          <div class="opt"><input type="checkbox" name="researchFocus" id="rf-tests" value="tests"><label for="rf-tests">Standardized tests (GRE/TOEFL/IELTS)</label></div>
+          <div class="opt"><input type="checkbox" name="researchFocus" id="rf-visa" value="visa"><label for="rf-visa">Student visa requirements</label></div>
+          <div class="opt"><input type="checkbox" name="researchFocus" id="rf-cost" value="cost"><label for="rf-cost">Cost of living</label></div>
+        </div>
+      </fieldset>
+    </div>
+
+    <!-- STEP 7 -->
+    <div class="step" data-step="6">
       <div class="results">
         <h2>Your research starting points</h2>
         <div class="summary-box" id="summaryBox"></div>
         <div id="resultsContainer"></div>
+        <div class="results-actions">
+          <button class="btn" id="copyLinksBtn" type="button">Copy all links</button>
+          <button class="btn" id="printResultsBtn" type="button">Print / Save as PDF</button>
+        </div>
       </div>
     </div>
 
@@ -523,7 +592,8 @@
     targetDegree: null, targetDegreeOther: '',
     subjects: [], subjectsOther: '',
     countries: [], countriesOther: '',
-    universities: {} // countryLabel -> [uni, uni, ...]
+    universities: {}, // countryLabel -> [uni, uni, ...]
+    admissionYearOther: ''
   };
 
   var stepEls = document.querySelectorAll('.step');
@@ -557,6 +627,32 @@
   document.querySelectorAll('input[name="countries"]').forEach(function(el){
     el.addEventListener('change', function(){ toggleOtherInput('input[name="countries"]', 'Other', 'countriesOtherWrap'); });
   });
+  document.getElementById('admissionYearOptions').addEventListener('change', function(e){
+    if(e.target && e.target.name === 'admissionYear'){
+      toggleOtherInput('input[name="admissionYear"]', 'Other', 'admissionYearOtherWrap');
+    }
+  });
+
+  function generateAdmissionYearOptions(){
+    var container = document.getElementById('admissionYearOptions');
+    var now = new Date();
+    var y = now.getFullYear();
+    var terms = [];
+    for(var offset = 1; offset <= 3; offset++){
+      terms.push('Fall ' + (y + offset));
+      terms.push('Spring ' + (y + offset + 1));
+    }
+    terms.push('Not sure yet');
+    terms.push('Other');
+    terms.forEach(function(term, idx){
+      var id = 'ay-' + idx;
+      var opt = document.createElement('div');
+      opt.className = 'opt';
+      opt.innerHTML = '<input type="radio" name="admissionYear" id="' + id + '" value="' + escapeHtml(term) + '">' +
+        '<label for="' + id + '">' + escapeHtml(term) + '</label>';
+      container.appendChild(opt);
+    });
+  }
 
   function getCheckedValues(name){
     var vals = [];
@@ -588,9 +684,19 @@
       return true;
     }
     if(i === 2){
+      var ay = getCheckedValue('admissionYear');
+      if(!ay || (ay === 'Other' && !document.getElementById('admissionYearOther').value.trim())) return false;
+      return true;
+    }
+    if(i === 3){
       var countries = getCheckedValues('countries');
       if(countries.length === 0) return false;
       if(countries.indexOf('Other') !== -1 && !document.getElementById('countriesOther').value.trim()) return false;
+      return true;
+    }
+    if(i === 5){
+      var focus = getCheckedValues('researchFocus');
+      if(focus.length === 0) return false;
       return true;
     }
     return true;
@@ -613,6 +719,11 @@
   function resolveDegreeLabel(name, otherId){
     var v = getCheckedValue(name);
     if(v === 'Other') return document.getElementById(otherId).value.trim() || 'Other';
+    return v;
+  }
+  function resolveAdmissionYear(){
+    var v = getCheckedValue('admissionYear');
+    if(v === 'Other') return document.getElementById('admissionYearOther').value.trim() || null;
     return v;
   }
 
@@ -688,16 +799,76 @@
     return 'https://www.google.com/search?q=' + encodeURIComponent(query);
   }
 
+  function programCategoryDefs(){
+    return [
+      { value:'requirements',
+        specificQuery: function(phrase, uni, yf){ return phrase + ' at ' + uni + ' requirements' + (yf ? ' for ' + yf + ' admission' : ''); },
+        specificLabel: function(phrase, uni, yf){ return capitalize(phrase) + ' at ' + uni + ' — requirements' + (yf ? ' (' + yf + ' admission)' : ''); },
+        generalQuery: function(phrase, country, yf){ return 'general information about ' + phrase + ' in ' + country + (yf ? ' for ' + yf + ' admission' : ''); },
+        generalLabel: function(phrase, country, yf){ return 'General information about ' + phrase + ' in ' + country + (yf ? ' (' + yf + ' admission)' : ''); }
+      },
+      { value:'deadlines',
+        specificQuery: function(phrase, uni, yf){ return phrase + ' at ' + uni + ' application deadline' + (yf ? ' ' + yf : ''); },
+        specificLabel: function(phrase, uni, yf){ return capitalize(phrase) + ' at ' + uni + ' — application deadline' + (yf ? ' (' + yf + ')' : ''); },
+        generalQuery: function(phrase, country, yf){ return 'application deadlines for ' + phrase + ' in ' + country + (yf ? ' ' + yf : ''); },
+        generalLabel: function(phrase, country, yf){ return 'Application deadlines for ' + phrase + ' in ' + country + (yf ? ' (' + yf + ')' : ''); }
+      },
+      { value:'funding',
+        specificQuery: function(phrase, uni){ return phrase + ' at ' + uni + ' tuition fees and scholarships'; },
+        specificLabel: function(phrase, uni){ return capitalize(phrase) + ' at ' + uni + ' — tuition & scholarships'; },
+        generalQuery: function(phrase, country){ return 'tuition fees and scholarships for ' + phrase + ' in ' + country; },
+        generalLabel: function(phrase, country){ return 'Tuition fees & scholarships for ' + phrase + ' in ' + country; }
+      },
+      { value:'tests',
+        specificQuery: function(phrase, uni){ return phrase + ' at ' + uni + ' GRE TOEFL IELTS requirements'; },
+        specificLabel: function(phrase, uni){ return capitalize(phrase) + ' at ' + uni + ' — GRE/TOEFL/IELTS requirements'; },
+        generalQuery: function(phrase, country){ return 'GRE TOEFL IELTS requirements for ' + phrase + ' in ' + country; },
+        generalLabel: function(phrase, country){ return 'GRE/TOEFL/IELTS requirements for ' + phrase + ' in ' + country; }
+      }
+    ];
+  }
+
+  function countryCategoryDefs(){
+    return [
+      { value:'visa',
+        query: function(country){ return 'student visa requirements for ' + country; },
+        label: function(country){ return 'Student visa requirements for ' + country; }
+      },
+      { value:'cost',
+        query: function(country){ return 'cost of living for international students in ' + country; },
+        label: function(country){ return 'Cost of living for international students in ' + country; }
+      }
+    ];
+  }
+
+  var allLinks = [];
+
+  function linkListItem(label, query){
+    var url = googleSearchLink(query);
+    allLinks.push({ label: label, url: url });
+    return '<li><a href="' + url + '" target="_blank" rel="noopener">' +
+      '<span>' + escapeHtml(label) + '</span>' +
+      '<span class="arrow">&#8599;</span></a></li>';
+  }
+
   function buildResults(){
     var targetDegree = resolveDegreeLabel('targetDegree', 'targetDegreeOther');
     var subjects = resolveFinalSubjects();
     var countries = resolveFinalCountries();
     var currentDegree = resolveDegreeLabel('currentDegree', 'currentDegreeOther');
     var currentYear = getCheckedValue('currentYear') === 'Other' ? document.getElementById('currentYearOther').value.trim() : getCheckedValue('currentYear');
+    var admissionYear = resolveAdmissionYear();
+    var yearFull = (admissionYear && admissionYear !== 'Not sure yet') ? admissionYear : null;
+    var focus = getCheckedValues('researchFocus');
+    var progCats = programCategoryDefs().filter(function(c){ return focus.indexOf(c.value) !== -1; });
+    var countryCats = countryCategoryDefs().filter(function(c){ return focus.indexOf(c.value) !== -1; });
+
+    allLinks = [];
 
     var summary = document.getElementById('summaryBox');
     summary.innerHTML = 'Currently: <b>' + escapeHtml(currentDegree) + '</b> (' + escapeHtml(currentYear) + ') &nbsp;&middot;&nbsp; ' +
       'Interested in: <b>' + escapeHtml(targetDegree) + '</b> in <b>' + escapeHtml(subjects.join(', ')) + '</b> &nbsp;&middot;&nbsp; ' +
+      'Target start: <b>' + escapeHtml(admissionYear || 'Flexible') + '</b> &nbsp;&middot;&nbsp; ' +
       'Countries: <b>' + escapeHtml(countries.join(', ')) + '</b>';
 
     var container = document.getElementById('resultsContainer');
@@ -709,28 +880,36 @@
       countryDiv.className = 'result-country';
       var html = '<h3>' + escapeHtml(country) + '</h3>';
 
-      if(unis.length > 0){
-        unis.forEach(function(uni){
-          html += '<div class="result-group"><h4>' + escapeHtml(uni) + '</h4><ul class="link-list">';
-          subjects.forEach(function(subject){
-            var phrase = gradPhrase(subject, targetDegree);
-            var query = phrase + ' at ' + uni + ' requirements';
-            html += '<li><a href="' + googleSearchLink(query) + '" target="_blank" rel="noopener">' +
-              '<span>' + escapeHtml(capitalize(phrase) + ' at ' + uni + ' — requirements') + '</span>' +
-              '<span class="arrow">&#8599;</span></a></li>';
-          });
-          html += '</ul></div>';
-        });
-      } else {
-        html += '<div class="result-group"><h4>General information</h4><ul class="link-list">';
-        subjects.forEach(function(subject){
-          var phrase = gradPhrase(subject, targetDegree);
-          var query = 'general information about ' + phrase + ' in ' + country;
-          html += '<li><a href="' + googleSearchLink(query) + '" target="_blank" rel="noopener">' +
-            '<span>' + escapeHtml('General information about ' + phrase + ' in ' + country) + '</span>' +
-            '<span class="arrow">&#8599;</span></a></li>';
+      if(countryCats.length > 0){
+        html += '<div class="result-group"><h4>Country essentials</h4><ul class="link-list">';
+        countryCats.forEach(function(cat){
+          html += linkListItem(cat.label(country), cat.query(country));
         });
         html += '</ul></div>';
+      }
+
+      if(progCats.length > 0){
+        if(unis.length > 0){
+          unis.forEach(function(uni){
+            html += '<div class="result-group"><h4>' + escapeHtml(uni) + '</h4><ul class="link-list">';
+            subjects.forEach(function(subject){
+              var phrase = gradPhrase(subject, targetDegree);
+              progCats.forEach(function(cat){
+                html += linkListItem(cat.specificLabel(phrase, uni, yearFull), cat.specificQuery(phrase, uni, yearFull));
+              });
+            });
+            html += '</ul></div>';
+          });
+        } else {
+          html += '<div class="result-group"><h4>General information</h4><ul class="link-list">';
+          subjects.forEach(function(subject){
+            var phrase = gradPhrase(subject, targetDegree);
+            progCats.forEach(function(cat){
+              html += linkListItem(cat.generalLabel(phrase, country, yearFull), cat.generalQuery(phrase, country, yearFull));
+            });
+          });
+          html += '</ul></div>';
+        }
       }
 
       countryDiv.innerHTML = html;
@@ -766,8 +945,8 @@
 
   nextBtn.addEventListener('click', function(){
     if(!validateStep(current)) return;
-    if(current === 2){ buildUniBlocks(); }
-    if(current === 3){ buildResults(); }
+    if(current === 3){ buildUniBlocks(); }
+    if(current === 5){ buildResults(); }
     if(current < totalSteps - 1){
       current++;
       showStep(current);
@@ -786,6 +965,26 @@
     location.reload();
   });
 
+  document.getElementById('copyLinksBtn').addEventListener('click', function(){
+    var text = allLinks.map(function(l){ return l.label + '\n' + l.url; }).join('\n\n');
+    var btn = this;
+    var originalText = btn.textContent;
+    function done(ok){
+      btn.textContent = ok ? 'Copied!' : 'Copy failed';
+      setTimeout(function(){ btn.textContent = originalText; }, 1800);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ done(true); }, function(){ done(false); });
+    } else {
+      done(false);
+    }
+  });
+
+  document.getElementById('printResultsBtn').addEventListener('click', function(){
+    window.print();
+  });
+
+  generateAdmissionYearOptions();
   attachLiveValidation();
   showStep(current);
 })();
