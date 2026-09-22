@@ -190,13 +190,13 @@ function tgl(id) {
 </head><body>
 <div class="page">
 <h1>Earthquake Aftershock Forecast Dashboard</h1>
-<div class="subtitle">Generated 2026-09-21T11:16:08.543708+00:00 &middot; signal-aggregation demo, not an official hazard forecast</div>
+<div class="subtitle">Generated 2026-09-22T10:28:09.458299+00:00 &middot; signal-aggregation demo, not an official hazard forecast</div>
 <div class="intro">
 <p>A daily-updating forecast of M&ge;5.0 aftershock risk across six major fault zones, combining classical earthquake decay-law physics with machine learning. Independent research project, not an official hazard system &mdash; see the <a href="https://github.com/wasikatcern/AfterQuakeAI/blob/main/FINDINGS_2026-07_negative_result.md">honest backtest results</a> for what's actually held up.</p>
 </div>
 <div class="official-callout"><b>For official earthquake alerts and safety information, see <a href="https://www.usgs.gov">usgs.gov</a>.</b></div>
-<div class="status-banner ok"><span class="dot"></span><span class="label">Last updated:</span> <span class="value">2026-09-21 11:16:08 UTC (0.0h ago)</span></div>
-<details class="recent-runs"><summary>Recent runs (10)</summary><div class="run-row run-SUCCESS"><span>2026-09-21 11:16:08 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-20 10:12:55 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-19 09:51:52 UTC</span><span class="run-status">SUCCESS</span><span>67s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-18 10:10:11 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-17 10:34:04 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-16 10:24:32 UTC</span><span class="run-status">SUCCESS</span><span>67s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-15 10:35:55 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-14 11:06:24 UTC</span><span class="run-status">SUCCESS</span><span>67s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-13 10:44:00 UTC</span><span class="run-status">SUCCESS</span><span>67s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-12 09:42:22 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div></details>
+<div class="status-banner ok"><span class="dot"></span><span class="label">Last updated:</span> <span class="value">2026-09-22 10:28:09 UTC (0.0h ago)</span></div>
+<details class="recent-runs"><summary>Recent runs (10)</summary><div class="run-row run-SUCCESS"><span>2026-09-22 10:28:09 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-21 11:16:08 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-20 10:12:55 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-19 09:51:52 UTC</span><span class="run-status">SUCCESS</span><span>67s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-18 10:10:11 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-17 10:34:04 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-16 10:24:32 UTC</span><span class="run-status">SUCCESS</span><span>67s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-15 10:35:55 UTC</span><span class="run-status">SUCCESS</span><span>66s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-14 11:06:24 UTC</span><span class="run-status">SUCCESS</span><span>67s</span><span class="run-zones">6/6</span></div><div class="run-row run-SUCCESS"><span>2026-09-13 10:44:00 UTC</span><span class="run-status">SUCCESS</span><span>67s</span><span class="run-zones">6/6</span></div></details>
 <div class="summary-row"><div class="chip chip-ELEVATED"><b>0</b> elevated</div><div class="chip chip-WATCH"><b>0</b> watch</div><div class="chip chip-LOW"><b>6</b> low</div></div>
 
 <div class="map-section">
@@ -214,7 +214,7 @@ function tgl(id) {
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 (function () {
-  var ZONES = [{"id": "california_san_andreas", "name": "California / San Andreas system", "bounds": [[32.0, -124.0], [40.0, -114.0]], "label": "LOW", "probability": 0.0272, "plain_omori_prob": null}, {"id": "cascadia", "name": "Cascadia subduction zone", "bounds": [[40.0, -125.0], [49.0, -121.0]], "label": "LOW", "probability": 0.0101, "plain_omori_prob": null}, {"id": "oklahoma_induced", "name": "Oklahoma induced seismicity zone", "bounds": [[33.5, -103.0], [37.0, -94.5]], "label": "LOW", "probability": 0.0101, "plain_omori_prob": null}, {"id": "alaska_aleutian", "name": "Alaska-Aleutian subduction zone", "bounds": [[51.0, -170.0], [62.0, -130.0]], "label": "LOW", "probability": 0.2672, "plain_omori_prob": null}, {"id": "new_madrid", "name": "New Madrid seismic zone", "bounds": [[35.0, -91.0], [38.0, -88.0]], "label": "LOW", "probability": 0.0101, "plain_omori_prob": null}, {"id": "japan_trench", "name": "Japan trench subduction zone", "bounds": [[30.0, 129.0], [46.0, 146.0]], "label": "LOW", "probability": 0.4048, "plain_omori_prob": null}];
+  var ZONES = [{"id": "california_san_andreas", "name": "California / San Andreas system", "bounds": [[32.0, -124.0], [40.0, -114.0]], "label": "LOW", "probability": 0.035, "plain_omori_prob": null}, {"id": "cascadia", "name": "Cascadia subduction zone", "bounds": [[40.0, -125.0], [49.0, -121.0]], "label": "LOW", "probability": 0.0101, "plain_omori_prob": null}, {"id": "oklahoma_induced", "name": "Oklahoma induced seismicity zone", "bounds": [[33.5, -103.0], [37.0, -94.5]], "label": "LOW", "probability": 0.0101, "plain_omori_prob": null}, {"id": "alaska_aleutian", "name": "Alaska-Aleutian subduction zone", "bounds": [[51.0, -170.0], [62.0, -130.0]], "label": "LOW", "probability": 0.2703, "plain_omori_prob": null}, {"id": "new_madrid", "name": "New Madrid seismic zone", "bounds": [[35.0, -91.0], [38.0, -88.0]], "label": "LOW", "probability": 0.0101, "plain_omori_prob": null}, {"id": "japan_trench", "name": "Japan trench subduction zone", "bounds": [[30.0, 129.0], [46.0, 146.0]], "label": "LOW", "probability": 0.3035, "plain_omori_prob": null}];
   var MAINSHOCKS = [{"zone_id": "alaska_aleutian", "zone_name": "Alaska-Aleutian subduction zone", "label": "LOW", "lat": 52.2579, "lon": -169.4088, "mag": 6.3, "place": "84 km SSW of Nikolski, Alaska", "time": "2026-09-03T11:17:24.056000+00:00", "depth_km": 35}, {"zone_id": "japan_trench", "zone_name": "Japan trench subduction zone", "label": "LOW", "lat": 41.8495, "lon": 142.802, "mag": 6, "place": "32 km SSW of Honch\u014d, Japan", "time": "2026-08-23T13:44:53.389000+00:00", "depth_km": 41}];
   var LABEL_COLORS = {"ELEVATED": "#c8434c", "WATCH": "#a8730f", "LOW": "#2f8f53"};
   var LABEL_CODES = {"ELEVATED": "E", "WATCH": "W", "LOW": "L"};
@@ -322,11 +322,11 @@ function tgl(id) {
 <tr class="sev-LOW">
   <td class="zone-name">Japan trench subduction zone</td>
   <td class="mainshock">M6.0 32 km SSW of Honchō, Japan</td>
-  <td class="prob">80.6%</td>
-  <td class="prob">47.9%</td>
-  <td class="prob">74.5%</td>
-  <td class="prob">62.3%</td>
-  <td class="prob final">40.5%</td>
+  <td class="prob">80.8%</td>
+  <td class="prob">9.1%</td>
+  <td class="prob">74.4%</td>
+  <td class="prob">46.7%</td>
+  <td class="prob final">30.3%</td>
   <td><span class="pill pill-LOW">LOW</span></td>
   <td class="mainshock">&mdash; pending</td>
   <td>
@@ -340,11 +340,11 @@ function tgl(id) {
 <tr class="sev-LOW">
   <td class="zone-name">Alaska-Aleutian subduction zone</td>
   <td class="mainshock">M6.3 84 km SSW of Nikolski, Alaska</td>
-  <td class="prob">50.2%</td>
-  <td class="prob">6.6%</td>
+  <td class="prob">50.0%</td>
+  <td class="prob">7.4%</td>
   <td class="prob">44.1%</td>
-  <td class="prob">26.7%</td>
-  <td class="prob final">26.7%</td>
+  <td class="prob">27.0%</td>
+  <td class="prob final">27.0%</td>
   <td><span class="pill pill-LOW">LOW</span></td>
   <td class="mainshock">&mdash; pending</td>
   <td>
@@ -359,10 +359,10 @@ function tgl(id) {
   <td class="zone-name">California / San Andreas system</td>
   <td class="mainshock">No active sequence</td>
   <td class="prob">4.7%</td>
-  <td class="prob">0.7%</td>
-  <td class="prob">4.2%</td>
-  <td class="prob">2.7%</td>
-  <td class="prob final">2.7%</td>
+  <td class="prob">0.5%</td>
+  <td class="prob">5.2%</td>
+  <td class="prob">3.5%</td>
+  <td class="prob final">3.5%</td>
   <td><span class="pill pill-LOW">LOW</span></td>
   <td class="mainshock">&mdash; pending</td>
   <td>
