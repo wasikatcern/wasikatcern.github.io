@@ -5,7 +5,7 @@ permalink: /
 author_profile: true
 ---
 
-Hello! I'm **Dr. Wasikul Islam**, an Experimental Particle Physicist at **CERN (Switzerland)**, an Assistant Professor of Physics at **KFUPM (KSA)**, and a Visiting Assistant Professor at the **University of Wisconsin–Madison (USA)**. Over the last 11 years, I have been a member of the ATLAS Experiment at the Large Hadron Collider(LHC) at CERN. And for last 3 years, I have been a Visiting Research Affiliate at **SLAC National Lab, Stanford University (USA)**.
+Hello! I'm **Dr. Wasikul Islam**, an Experimental Particle Physicist at **CERN (Switzerland)**, an Assistant Professor of Physics at **KFUPM (KSA)**, and a Visiting Researcher at the **University of Wisconsin–Madison (USA)**. Over the last 11 years, I have been a member of the ATLAS Experiment at the Large Hadron Collider(LHC) at CERN. For the last 3 years, I was a Visiting Research Affiliate at **SLAC National Accelerator Laboratory, Stanford University (USA)**.
 
 My research aims to uncover new physics at the Large Hadron Collider and the future particle physics experiments by developing cutting‑edge techniques and algorithms for high‑energy physics, powered by AI and machine learning. My passion for particle physics is driven by a profound desire to understand our universe at its most fundamental and smallest scales.
 
