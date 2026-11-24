@@ -34,7 +34,7 @@ A list of recent research projects can be found [at this link](https://wasikatce
 
  **November 11, 2026:** Dr. Wasikul Islam gave a talk, *"The Search for the Smallest Building Blocks of the Universe at CERN's Large Hadron Collider,"* at IRC-INE, KFUPM. [[Event poster](https://today.kfupm.edu.sa/media/original_images/NLS_6_-_Dr._Wasikul_Islam_1.png)]
  
- **October 16, 2026:** At its 115th meeting at CERN, the ATLAS Collaboration Board admitted King Fahd University of Petroleum & Minerals (KFUPM) as an Associate Institute of the ATLAS Collaboration. [[Letter from the ATLAS Spokesperson](/images/KFUPM-ATLAS-16Oct2026.pdf)]
+ **October 16, 2026:** At its 115th Collaboration Board meeting at CERN, the ATLAS Collaboration Board admitted King Fahd University of Petroleum & Minerals (KFUPM) as an Associate Institute of the ATLAS Collaboration. [[Letter from the ATLAS Spokesperson](/images/KFUPM-ATLAS-16Oct2026.pdf)]
 
 ---
 
