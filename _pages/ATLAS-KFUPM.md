@@ -32,28 +32,23 @@ Good searches start with good questions. We work at the interface of **phenomeno
 
 ## Training the next generation
 
-Students and postdocs in our group become full participants in an international collaboration. They develop skills in:
-
-- large-scale data analysis and statistics,
-- machine learning and AI,
-- scientific computing (Python / C++),
-- silicon detectors and instrumentation,
-- working in global scientific teams.
-
-Members may also have opportunities to spend research time at **CERN** and **SLAC**.
-
-We particularly welcome motivated students who are curious and willing to learn. Not every skill has to be in place on day one; we are committed to helping talented people grow into independent researchers.
+Students and postdocs join the ATLAS Collaboration as full members. They gain hands-on experience in data analysis, AI/ML, scientific computing and silicon detectors, with opportunities to do research at **CERN** and **SLAC**. We welcome curious, motivated people who don't yet have every skill, and help them grow into independent researchers.
 
 ---
 
-## Join us
-
+## Current openings: Join us
 We are currently recruiting:
-
 - **PhD students** in experimental particle physics: [details on INSPIRE](https://inspirehep.net/jobs/3222662)
 - **Postdoctoral researchers** in ATLAS hardware/HL-LHC upgrade and data analysis/AI: [details on INSPIRE](https://inspirehep.net/jobs/3228565)
 
 Interested students and researchers are welcome to get in touch with **Prof. Wasikul Islam**.
+
+---
+
+## News
+
+ **November 11, 2026:** Dr. Wasikul Islam gave a talk, *"The Search for the Smallest Building Blocks of the Universe at CERN's Large Hadron Collider,"* at IRC-INE, KFUPM. [[Event poster](https://today.kfupm.edu.sa/media/original_images/NLS_6_-_Dr._Wasikul_Islam_1.png)]
+
 
 ---
 
