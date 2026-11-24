@@ -26,6 +26,8 @@ From 2030 the LHC will enter its **High-Luminosity (HL-LHC)** era, delivering ab
 ### Bridging theory and experiment
 Good searches start with good questions. We work at the interface of **phenomenology and experiment**. This includes simulation and sensitivity studies for the HL-LHC and **future colliders**, and connecting new theoretical ideas to signatures that can actually be tested in the data.
 
+A list of recent research projects can be found [at this link](https://wasikatcern.github.io/research) .
+
 ---
 
 ## News
