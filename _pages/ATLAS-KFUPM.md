@@ -1,6 +1,6 @@
 ---
 layout: single
-title: “ATLAS/CERN research group at KFUPM
+title: ATLAS/CERN research group at KFUPM
 permalink: /KFUPM-ATLAS/
 author_profile: true
 ---
@@ -11,9 +11,9 @@ author_profile: true
 
 ## Exploring the frontier of particle physics, from Dhahran to CERN
 
-King Fahd University of Petroleum & Minerals (KFUPM) has recently joined the **ATLAS Collaboration** at CERN's **Large Hadron Collider (LHC)** as an Associate Member Institute. ATLAS is one of the largest scientific collaborations in the world: thousands of physicists and engineers from around 180 institutions working together to understand the fundamental building blocks of nature. ATLAS co-discovered the Higgs boson in 2012.
+King Fahd University of Petroleum & Minerals (KFUPM) has recently joined the **[ATLAS Collaboration](https://atlas.cern)** at CERN's **[Large Hadron Collider(LHC)](https://en.wikipedia.org/wiki/Large_Hadron_Collider)** as an Associate Member Institute. ATLAS is one of the largest scientific collaborations in the world: thousands of physicists and engineers from around 180 institutions working together to understand the fundamental building blocks of nature. ATLAS co-discovered the Higgs boson in 2012, leading to the 2013 Nobel Prize in Physics.
 
-Our newly established group is based in the **Department of Physics** and the **Interdisciplinary Research Center for Industrial Nuclear Energy (IRC-INE)**. We work closely with colleagues at **SLAC National Accelerator Laboratory (USA)** and across the ATLAS Collaboration. Our goal is simple and ambitious: to make KFUPM a home for frontier particle physics research in the region. That means doing world-class science, building detector technology on campus, and training the next generation of physicists in Saudi Arabia.
+Our newly established group, led by Dr. Wasikul Islam, is based in the **[Department of Physics](https://physics.kfupm.edu.sa)** and the **[Interdisciplinary Research Center for Industrial Nuclear Energy (IRC-INE)](https://ri.kfupm.edu.sa/irc-ine)**. We work closely with colleagues at **[SLAC National Accelerator Laboratory (USA)](https://www6.slac.stanford.edu)** and across the ATLAS Collaboration. Our goal is simple and ambitious: to make KFUPM a home for frontier particle physics research in the region. That means doing world-class science, building detector technology on campus, and training the next generation of physicists in Saudi Arabia.
 
 ---
 
