@@ -7,6 +7,8 @@ author_profile: true
 
 Hello! I'm **Dr. Wasikul Islam**, an Experimental Particle Physicist at **CERN (Switzerland)**, an Assistant Professor of Physics at **[KFUPM (KSA)](https://physics.kfupm.edu.sa/People/faculty/faculty-details/wasikul.islam)**, and a Visiting Researcher at the **University of Wisconsin–Madison (USA)**. Over the last 11 years, I have been a member of the ATLAS Experiment at the Large Hadron Collider(LHC) at CERN. For the last 3 years, I was a Visiting Research Affiliate at **SLAC National Accelerator Laboratory, Stanford University (USA)**.
 
+I recently established a research group in Experimental Particle Physics at KFUPM. More details about my group can be found at [this link](https://wasikatcern.github.io/KFUPM-ATLAS).
+
 My research aims to uncover new physics at the Large Hadron Collider and future particle physics experiments by developing cutting‑edge techniques and algorithms for high‑energy physics, powered by AI and machine learning. My passion for particle physics is driven by a profound desire to understand our universe at its most fundamental and smallest scales.
 
 I co-developed various tools and software, including [AD-Filter](https://mc.hep.anl.gov/adfilter/) (for Anomaly detection), [TRACE-HEP](https://wasikatcern.github.io/TRACE-HEP/site/) (For Event displays), WAVeS (Algorithm for Vertex Selection), [RMM-C46](https://arxiv.org/abs/2602.17563) (data formats for ML studies), etc. Several of my works have been featured in [news articles](https://wasikatcern.github.io/awards/#selected-news-articles-and-features).
