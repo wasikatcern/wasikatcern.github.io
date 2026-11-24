@@ -32,7 +32,7 @@ Good searches start with good questions. We work at the interface of **phenomeno
 
 ## Training the next generation
 
-Students and postdocs join the ATLAS Collaboration as full members. They gain hands-on experience in data analysis, AI/ML, scientific computing and silicon detectors, with opportunities to do research at **CERN** and **SLAC**. We welcome curious, motivated people who don't yet have every skill, and help them grow into independent researchers.
+Students and postdocs join the ATLAS Collaboration at CERN as members. They gain hands-on experience in data analysis, AI/ML, scientific computing and silicon detectors, with opportunities to do research at **CERN** and **SLAC**. We welcome curious, motivated people who don't yet have every skill, and help them grow into independent researchers.
 
 ---
 
