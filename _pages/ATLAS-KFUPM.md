@@ -1,6 +1,6 @@
 ---
 layout: single
-title: ATLAS/CERN research group at KFUPM
+title: ATLAS/CERN research group at KFUPM: Exploring the frontier of particle physics
 permalink: /KFUPM-ATLAS/
 author_profile: false
 ---
@@ -8,8 +8,6 @@ author_profile: false
 <p align="center">
   <img src="../images/ATLAS@KFUPM.jpeg" alt="" width="500">
 </p>
-
-## Exploring the frontier of particle physics, from Dhahran to CERN
 
 King Fahd University of Petroleum & Minerals (KFUPM) has recently joined the **[ATLAS Collaboration](https://atlas.cern)** at CERN's **[Large Hadron Collider(LHC)](https://en.wikipedia.org/wiki/Large_Hadron_Collider)** as an Associate Member Institute. ATLAS is one of the largest scientific collaborations in the world: thousands of physicists and engineers from around 180 institutions working together to understand the fundamental building blocks of nature. ATLAS co-discovered the Higgs boson in 2012, leading to the 2013 Nobel Prize in Physics.
 
