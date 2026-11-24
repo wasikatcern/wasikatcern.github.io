@@ -6,12 +6,12 @@ author_profile: false
 ---
 
 <p align="center">
-  <img src="../images/ATLAS@KFUPM.jpeg" alt="" width="500">
+  <img src="../images/ATLAS@KFUPM.jpeg" alt="" width="700">
 </p>
 
 King Fahd University of Petroleum & Minerals (KFUPM) has recently joined the **[ATLAS Collaboration](https://atlas.cern)** at CERN's **[Large Hadron Collider(LHC)](https://en.wikipedia.org/wiki/Large_Hadron_Collider)** as an Associate Member Institute. ATLAS is one of the largest scientific collaborations in the world: thousands of physicists and engineers from around 180 institutions working together to understand the fundamental building blocks of nature. ATLAS co-discovered the Higgs boson in 2012, leading to the 2013 Nobel Prize in Physics.
 
-Our newly established group, led by [Prof. Wasikul Islam](https://physics.kfupm.edu.sa/People/faculty/faculty-details/wasikul.islam), is based in the **[Department of Physics](https://physics.kfupm.edu.sa)** and the **[Interdisciplinary Research Center for Industrial Nuclear Energy (IRC-INE)](https://ri.kfupm.edu.sa/irc-ine)**. We work closely with colleagues at **[SLAC National Accelerator Laboratory (USA)](https://www6.slac.stanford.edu)** and across the ATLAS Collaboration. Our goal is simple and ambitious: to make KFUPM a home for frontier particle physics research in the region. That means doing world-class science, building detector technology on campus, and training the next generation of physicists in Saudi Arabia.
+Our newly established group, led by [Prof. Wasikul Islam](https://physics.kfupm.edu.sa/People/faculty/faculty-details/wasikul.islam), is based in the **[Department of Physics](https://physics.kfupm.edu.sa)** and the **[Interdisciplinary Research Center for Industrial Nuclear Energy (IRC-INE)](https://ri.kfupm.edu.sa/irc-ine)**. We work closely with colleagues at **[SLAC National Accelerator Laboratory/Stanford University(USA)](https://www6.slac.stanford.edu)**, **[Argonne National Laboratory(USA)](https://www.anl.gov)**, and across the ATLAS Collaboration. Our goal is simple and ambitious: to make KFUPM a home for frontier particle physics research in the region. That means doing world-class science, building detector technology on campus, and training the next generation of physicists in Saudi Arabia.
 
 ---
 
@@ -41,7 +41,7 @@ A list of recent research projects can be found [at this link](https://wasikatce
 
 ## Current openings: Join us
 
-Students and postdocs join the ATLAS Collaboration at CERN as members. They gain hands-on experience in data analysis, AI/ML, scientific computing and silicon detectors, with opportunities to do research at **CERN** and **SLAC**. We welcome curious, motivated people who don't yet have every skill, and help them grow into independent researchers.
+Students and postdocs join the ATLAS Collaboration at CERN as members. They gain hands-on experience in data analysis, AI/ML, scientific computing, and silicon detectors, with opportunities to do research at **CERN** and **SLAC**. We welcome curious, motivated people who don't yet have every skill, and help them grow into independent researchers.
 
 We are currently recruiting:
 - **PhD students** in experimental particle physics: [details on INSPIRE](https://inspirehep.net/jobs/3222662)
