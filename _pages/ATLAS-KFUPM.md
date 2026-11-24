@@ -1,6 +1,6 @@
 ---
 layout: single
-title: ATLAS/CERN research group at KFUPM: Exploring the frontier of particle physics
+title: ATLAS/CERN research group at KFUPM - Exploring the frontier of particle physics
 permalink: /KFUPM-ATLAS/
 author_profile: false
 ---
